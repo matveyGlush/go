@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2024-06-25T23:18:30.247Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="rxg21qDYzw46hYyclHYH" version="24.4.13" type="github">
+<mxfile host="app.diagrams.net" modified="2024-06-26T09:57:19.859Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" etag="ElT5RyZmdK9XO87anLrp" version="24.4.13" type="github">
   <diagram id="R2lEEEUBdFMjLlhIrx00" name="Page-1">
-    <mxGraphModel dx="1207" dy="1606" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
+    <mxGraphModel dx="1283" dy="1656" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="1200" math="0" shadow="0" extFonts="Permanent Marker^https://fonts.googleapis.com/css?family=Permanent+Marker">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -456,7 +456,7 @@
         <mxCell id="mHIWMSmWOXpyb1FS3OvH-31" value="Время хода" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="mHIWMSmWOXpyb1FS3OvH-29">
           <mxGeometry y="26" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="mHIWMSmWOXpyb1FS3OvH-44" value="Ячейка" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;rounded=1;" vertex="1" parent="1">
+        <mxCell id="mHIWMSmWOXpyb1FS3OvH-44" value="Перекрестие" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;rounded=1;" vertex="1" parent="1">
           <mxGeometry x="1130" y="1010" width="160" height="116" as="geometry" />
         </mxCell>
         <mxCell id="mHIWMSmWOXpyb1FS3OvH-45" value="Состояние" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="mHIWMSmWOXpyb1FS3OvH-44">
@@ -578,7 +578,7 @@
         <mxCell id="mHIWMSmWOXpyb1FS3OvH-87" value="Время хода" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="mHIWMSmWOXpyb1FS3OvH-86">
           <mxGeometry y="56" width="160" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="mHIWMSmWOXpyb1FS3OvH-88" value="Ячейки" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;rounded=0;" vertex="1" parent="1">
+        <mxCell id="mHIWMSmWOXpyb1FS3OvH-88" value="Перекрестия" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;align=center;fontSize=14;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="1140" y="1595" width="160" height="146" as="geometry" />
         </mxCell>
         <mxCell id="mHIWMSmWOXpyb1FS3OvH-117" value="&lt;i style=&quot;&quot;&gt;id игрока&lt;/i&gt;" style="text;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=12;whiteSpace=wrap;html=1;rounded=1;" vertex="1" parent="mHIWMSmWOXpyb1FS3OvH-88">
