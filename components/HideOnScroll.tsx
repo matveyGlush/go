@@ -1,7 +1,6 @@
-"use client"
+"use client";
 
-import { Slide, useScrollTrigger } from '@mui/material';
-import { ReactElement } from 'react';
+import { useEffect, useState, ReactElement } from "react";
 
 interface Props {
   window?: () => Window;
@@ -9,14 +8,31 @@ interface Props {
 }
 
 export default function HideOnScroll({ children, window }: Props) {
-  
-  const trigger = useScrollTrigger({
-    target: window ? window() : undefined,
-  });
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    const targetWindow = window ? window() : globalThis.window;
+    if (!targetWindow) return;
+
+    let lastScrollY = targetWindow.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = targetWindow.scrollY;
+      setShow(lastScrollY > currentScrollY || currentScrollY < 10);
+      lastScrollY = currentScrollY;
+    };
+
+    targetWindow.addEventListener("scroll", handleScroll);
+    return () => targetWindow.removeEventListener("scroll", handleScroll);
+  }, [window]);
 
   return (
-    <Slide appear={false} direction="down" in={!trigger}>
-      { children ?? <div/> }
-    </Slide>
+    <div
+      className={`transition-transform duration-300 ease-in-out ${
+        show ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
+      {children ?? <div />}
+    </div>
   );
 }

@@ -1,56 +1,40 @@
-"use client"
+"use client";
 
-import { ReactNode } from 'react';
-import { Container, Box, AppBar, Toolbar, Typography, ThemeProvider, createTheme } from '@mui/material';
-import Link from 'next/link';
-import HideOnScroll from './HideOnScroll'
-import { usePathname } from 'next/navigation';
-import CunstomButton from './CustomButton';
-
-const theme = createTheme({
-  typography: {
-    fontFamily: 'Arial, sans-serif',
-    h1: { fontSize: '2rem', fontWeight: 700 },
-    h2: { fontSize: '1.8rem', fontWeight: 700 },
-    h3: { fontSize: '1.6rem', fontWeight: 700 },
-    button: { textTransform: 'none' }
-  },
-  palette: {
-    primary: { main: '#000' },
-    secondary: { main: '#fff' },
-    background: { default: '#dfe4e6' },
-  },
-});
+import { ReactNode } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import HideOnScroll from "./HideOnScroll";
+import CustomButton from "./CustomButton";
 
 export default function CustomLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
-    <ThemeProvider theme={theme}>
+    <div className="bg-gray-100 min-h-screen flex flex-col">
       <HideOnScroll>
-        <AppBar position="fixed">
-          <Toolbar sx={{ width: '100%', mx: 'auto', maxWidth: 1200, justifyContent: 'space-between' }}>
-            <Link href={"/"}>
-              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Some&nbsp;Company
-              </Typography>
+        <header className="fixed top-0 left-0 w-full bg-black text-white z-50">
+          <div className="container mx-auto max-w-5xl flex justify-between items-center py-4 px-6">
+            <Link href="/">
+              <div className="text-xl font-bold">Some&nbsp;Company</div>
             </Link>
-            {pathname !== '/contact-us' &&
-              <Link tabIndex={-1} href={"contact-us"}>
-                <CunstomButton variant="contained" color="secondary">Contact&nbsp;us</CunstomButton>
+            {pathname !== "/contact-us" && (
+              <Link href="/contact-us" tabIndex={-1}>
+                <CustomButton className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200">
+                  Contact&nbsp;us
+                </CustomButton>
               </Link>
-            }
-          </Toolbar>
-        </AppBar>
+            )}
+          </div>
+        </header>
       </HideOnScroll>
-      <Container sx={{ maxWidth: 'lg', pt: 9, mb: 4 }}>
-        <Box mt={4}>
-          {children}
-        </Box>
-      </Container>
-      <footer style={{ textAlign: 'center', padding: '1rem 0' }}>
-        <Typography variant="body2">Some&nbsp;Company&nbsp;2024</Typography>
+
+      <main className="container mx-auto max-w-4xl pt-24 px-4 flex-grow text-black">
+        <div className="mt-8">{children}</div>
+      </main>
+
+      <footer className="text-center py-4 bg-white">
+        <p className="text-gray-600 text-sm">Some&nbsp;Company&nbsp;2024</p>
       </footer>
-    </ThemeProvider>
+    </div>
   );
-};
+}

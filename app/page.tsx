@@ -4,10 +4,8 @@ import CunstomButton from '@/components/CustomButton';
 import CustomLayout from '@/components/CustomLayout';
 import Head from 'next/head';
 import Link from 'next/link';
-import LiteYouTubeEmbed from 'react-lite-youtube-embed';
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css';
 
-export default function Home() {
+export default function Page() {
   return (
     <>
       <Head>
@@ -24,10 +22,6 @@ export default function Home() {
               <p className="text-lg">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam mattis, leo et condimentum ultricies.</p>
             </div>
             <div className="rounded-lg overflow-hidden">
-              <LiteYouTubeEmbed
-                id="dQw4w9WgXcQ"
-                title="YouTube Embed"
-              />
             </div>
           </div>
         </div>
@@ -43,14 +37,14 @@ export default function Home() {
             ))}
           </div>
           <Link tabIndex={-1} href={"contact-us"}>
-            <CunstomButton className="bg-primary text-white rounded-lg px-6 py-2 mt-5 hover:bg-primary-dark">Contact us</CunstomButton>
+            <div className="bg-primary text-white rounded-lg px-6 py-2 mt-5 hover:bg-primary-dark">Contact us</div>
           </Link>
         </div>
 
         <div className="bg-gray-100 py-16 rounded-lg text-center">
           <h3 className="text-2xl font-bold">Less important title</h3>
           <Link tabIndex={-1} href={"contact-us"}>
-            <CunstomButton className="bg-primary text-white rounded-lg px-6 py-2 mt-2 hover:bg-primary-dark">Contact us</CunstomButton>
+            <div className="bg-primary text-white rounded-lg px-6 py-2 mt-2 hover:bg-primary-dark">Contact us</div>
           </Link>
         </div>
       </CustomLayout>
