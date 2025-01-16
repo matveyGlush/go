@@ -20,7 +20,7 @@ export default function Auth() {
         <meta property="og:image:height" content="<generated>" />
       </Head>
       <CustomLayout>
-        <div className="py-7 text-center">
+        <div className="pb-7 text-center">
           {isAuth ? <LogIn/> : <SignUp/>}
         </div>
         <CunstomButton 

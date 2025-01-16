@@ -4,8 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 
 type Inputs = {
   name: string
-  email: string
-  message: string
+  password: string
 }
 
 export default function LogIn() {
@@ -26,7 +25,7 @@ export default function LogIn() {
 
   useEffect(() => {
     if (!contactsData) return;
-    fetch(`https://functions.yandexcloud.net/d4eo4pnc96oovfhiuc6s?name=${contactsData.name}&email=${contactsData.email}&message=${contactsData.message}`)
+    fetch(`https://functions.yandexcloud.net/d4eo4pnc96oovfhiuc6s?name=${contactsData.name}`)
       .then((response) => response.json())
       .then((data) => {
         setSuccessMsg(data.success);
@@ -41,10 +40,10 @@ export default function LogIn() {
         {successMsg !== undefined ? (
           <h1 className="text-2xl font-bold">{successMsg}</h1>
         ) : (
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="relative mb-4">
               <label className="block text-left text-sm font-medium mb-1" htmlFor="name">
-                Почта или номер телефона
+                Имя в игре или Почта
               </label>
               <input
                 id="name"
@@ -52,30 +51,31 @@ export default function LogIn() {
                 aria-invalid={errors.name ? "true" : "false"}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
               />
-              {errors.name?.type === "required" && <p className="text-red-500 text-sm">This field is required</p>}
-              {errors.name?.type === "maxLength" && <p className="text-red-500 text-sm">Name must be less than 40 characters</p>}
-              {errors.name?.type === "minLength" && <p className="text-red-500 text-sm">Name must be at least 2 characters</p>}
+              {errors.name?.type === "required" && <p className="absolute top-0 left-44 text-red-800 text-sm">Обязательное поле</p>}
+              {errors.name?.type === "maxLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не больше 40 символов</p>}
+              {errors.name?.type === "minLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не меньше 2 символов</p>}
             </div>
 
-            <div>
-              <label className="block text-left text-sm font-medium mb-1" htmlFor="email">
+            <div className="relative mb-4">
+              <label className="block text-left text-sm font-medium mb-1" htmlFor="password">
                 Пароль
               </label>
               <input
-                id="email"
-                {...register("email", { required: true, maxLength: 40, minLength: 2 })}
+                id="password"
+                type='password'
+                {...register("password", { required: true, maxLength: 40, minLength: 2 })}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
               />
-              {errors.email?.type === "required" && <p className="text-red-500 text-sm">This field is required</p>}
-              {errors.email?.type === "maxLength" && <p className="text-red-500 text-sm">Email must be less than 40 characters</p>}
-              {errors.email?.type === "minLength" && <p className="text-red-500 text-sm">Email must be at least 2 characters</p>}
+              {errors.password?.type === "required" && <p className="absolute top-0 left-44 text-red-800 text-sm">Обязательное поле</p>}
+              {errors.password?.type === "maxLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не больше 40 символов</p>}
+              {errors.password?.type === "minLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не меньше 2 символов</p>}
             </div>
 
             <CunstomButton
               type="submit"
-              className="mt-20 w-full py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+              className="mt-5 w-full py-2 bg-black text-white rounded-lg hover:bg-gray-800"
             >
-              Submit
+              Отправить
             </CunstomButton>
           </form>
         )}

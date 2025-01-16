@@ -17,7 +17,7 @@ export default function CustomLayout({ children }: { children: ReactNode }) {
             <Link href="/">
               <div className="text-xl font-bold">Игра&nbsp;Го</div>
             </Link>
-            {pathname !== "/contact-us" && (
+            {pathname !== "/auth" && (
               <CustomLink href="auth" theme="dark">Аккаунт</CustomLink>
             )}
           </div>
