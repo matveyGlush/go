@@ -35,15 +35,15 @@ export default function LogIn() {
 
   return (
     <>
-      <h2 className="text-4xl font-bold mb-8">Вход</h2>
-      <div className="p-8 mt-8 max-w-md mx-auto bg-white rounded-lg shadow-md">
+      <h2 className="text-4xl font-bold mb-8 mt-8">Вход</h2>
+      <div className="md:p-8 p-4 mt-8 max-w-md mx-auto bg-white rounded-lg shadow-md">
         {successMsg !== undefined ? (
           <h1 className="text-2xl font-bold">{successMsg}</h1>
         ) : (
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="relative mb-4">
               <label className="block text-left text-sm font-medium mb-1" htmlFor="name">
-                Имя в игре или Почта
+                Имя в игре / Почта
               </label>
               <input
                 id="name"
@@ -51,9 +51,9 @@ export default function LogIn() {
                 aria-invalid={errors.name ? "true" : "false"}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
               />
-              {errors.name?.type === "required" && <p className="absolute top-0 left-44 text-red-800 text-sm">Обязательное поле</p>}
-              {errors.name?.type === "maxLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не больше 40 символов</p>}
-              {errors.name?.type === "minLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не меньше 2 символов</p>}
+              {errors.name?.type === "required" && <p className="absolute top-0 left-36 text-red-800 text-sm">Обязательное&nbsp;поле</p>}
+              {errors.name?.type === "maxLength" && <p className="absolute top-0 left-36 text-red-800 text-sm">Не&nbsp;больше&nbsp;40&nbsp;символов</p>}
+              {errors.name?.type === "minLength" && <p className="absolute top-0 left-36 text-red-800 text-sm">Не&nbsp;меньше&nbsp;2&nbsp;символов</p>}
             </div>
 
             <div className="relative mb-4">
@@ -66,9 +66,9 @@ export default function LogIn() {
                 {...register("password", { required: true, maxLength: 40, minLength: 2 })}
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
               />
-              {errors.password?.type === "required" && <p className="absolute top-0 left-44 text-red-800 text-sm">Обязательное поле</p>}
-              {errors.password?.type === "maxLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не больше 40 символов</p>}
-              {errors.password?.type === "minLength" && <p className="absolute top-0 left-44 text-red-800 text-sm">Не меньше 2 символов</p>}
+              {errors.password?.type === "required" && <p className="absolute top-0 left-36 text-red-800 text-sm">Обязательное&nbsp;поле</p>}
+              {errors.password?.type === "maxLength" && <p className="absolute top-0 left-36 text-red-800 text-sm">Не&nbsp;больше&nbsp;40 &nbsp;имволов</p>}
+              {errors.password?.type === "minLength" && <p className="absolute top-0 left-36 text-red-800 text-sm">Не&nbsp;меньше&nbsp;2&nbsp;символов</p>}
             </div>
 
             <CunstomButton

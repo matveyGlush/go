@@ -3,8 +3,12 @@
 import CustomButton from '@/components/CustomButton';
 import CustomLayout from '@/components/CustomLayout';
 import CustomLink from '@/components/CustomLink';
+import FormCreateGame from '@/components/FormCreateGame';
+import FormFindGame from '@/components/FormFindGame';
+import Modal from '@/components/Modal';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Page() {
   const results = [
@@ -57,6 +61,11 @@ export default function Page() {
       gameId: '7'
     },
   ]
+
+  const [showCreateGameModal, setShowCreateGameModal] = useState(false)
+  const [showFindGameModal, setShowFindGameModal] = useState(false)
+
+
   return (
     <>
       <Head>
@@ -79,8 +88,18 @@ export default function Page() {
         </div>
 
         <div className="flex justify-center gap-4 md:gap-10 mb-10">
-          <CustomButton className="max-w-44 mt-3 mb-6 px-7 py-3" theme='dark'>Найти игру</CustomButton>
-          <CustomButton className="max-w-44 mt-3 mb-6 px-7 py-3" >Создать новую</CustomButton>
+          <CustomButton 
+            className="max-w-44 mt-3 mb-6 px-7 py-3" theme='dark'
+            onClickFunc={() => setShowFindGameModal(!showFindGameModal)}
+          >
+            Найти игру
+          </CustomButton>
+          <CustomButton 
+            className="max-w-44 mt-3 mb-6 px-7 py-3" 
+            onClickFunc={() => setShowCreateGameModal(!showCreateGameModal)}
+          >
+            Создать новую
+          </CustomButton>
         </div>
 
         <div className="mb-5 text-center md:text-left">
@@ -104,6 +123,12 @@ export default function Page() {
           <CustomLink href="contact-us" className="max-w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomLink>
         </div>
       </CustomLayout>
+      <Modal showModal={showCreateGameModal} showModalFunc={setShowCreateGameModal}>
+        <FormCreateGame/>
+      </Modal>
+      <Modal showModal={showFindGameModal} showModalFunc={setShowFindGameModal}>
+        <FormFindGame/>
+      </Modal>
     </>
   );
 }

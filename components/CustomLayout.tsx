@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import HideOnScroll from "./HideOnScroll";
 import CustomLink from "@/components/CustomLink";
 
-export default function CustomLayout({ children }: { children: ReactNode }) {
+export default function CustomLayout({ children, className }: { children: ReactNode, className?: string }) {
   const pathname = usePathname();
 
   return (
@@ -24,8 +24,8 @@ export default function CustomLayout({ children }: { children: ReactNode }) {
         </header>
       </HideOnScroll>
 
-      <main className="container mx-auto max-w-4xl pt-24 px-4 flex-grow text-black">
-        <div className="mt-8">{children}</div>
+      <main className={`container mx-auto max-w-4xl pt-24 px-4 flex-grow text-black ${className}`}>
+        <div className="">{children}</div>
       </main>
 
       <footer className="text-center py-4 bg-white">
