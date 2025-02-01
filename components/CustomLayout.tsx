@@ -17,7 +17,7 @@ export default function CustomLayout({ children, className }: { children: ReactN
             <Link href="/">
               <div className="text-xl font-bold">Игра&nbsp;Го</div>
             </Link>
-            {pathname !== "/auth" && (
+            {pathname !== "/account" && (
               <CustomLink href="auth" theme="dark">Аккаунт</CustomLink>
             )}
           </div>
@@ -25,7 +25,7 @@ export default function CustomLayout({ children, className }: { children: ReactN
       </HideOnScroll>
 
       <main className={`container mx-auto max-w-4xl pt-24 px-4 flex-grow text-black ${className}`}>
-        <div className="">{children}</div>
+        <div>{children}</div>
       </main>
 
       <footer className="text-center py-4 bg-white">

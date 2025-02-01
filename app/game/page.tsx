@@ -14,7 +14,7 @@ export default function Game() {
         <meta property="og:image:width" content="<generated>" />
         <meta property="og:image:height" content="<generated>" />
       </Head>
-      <CustomLayout className='flex justify-center items-center'>
+      <CustomLayout className='flex justify-center items-center overflow-hidden'>
         <GameBoard/>
       </CustomLayout>
     </>

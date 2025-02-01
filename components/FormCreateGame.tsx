@@ -74,6 +74,7 @@ export default function FormCreateGame() {
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary"
                 placeholder='Игровое имя соперника'
               />
+              <span className="inline-block text-xs w-full text-center">*Оставьте пустым для подбора случайного соперника</span>
               {errors.invite?.type === "maxLength" && <p className="absolute top-0 left-36 text-red-800 text-sm">Не больше&nbsp;40&nbsp;символов</p>}
               {errors.invite?.type === "minLength" && <p className="absolute top-0 left-36 text-red-800 text-sm">Не меньше&nbsp;2&nbsp;символов</p>}
             </div>
