@@ -24,7 +24,6 @@ export default function Modal({ children, className = '', showModal, showModalFu
 
   return (
     <>
-      {/* {dialogRef.current && <div className="absolute left-0 top-0 w-full h-full bg-red-50"/>} */}
       <dialog
         ref={dialogRef}
         className={`relative w-full max-w-lg dialog-backdrop rounded-md p-4 md:p-12 border bg-gray-100 text-black ${className}`}

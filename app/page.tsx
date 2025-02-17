@@ -13,49 +13,49 @@ import { useState } from 'react';
 export default function Page() {
   const results = [
     {
-      opponent: 'Игрок id 1',
+      opponent: 'username1',
       date: '23.10.2024',
       state: 'victory',
       gameId: '0'
     },
     {
-      opponent: 'Игрок id 2',
+      opponent: 'username2',
       date: '23.10.2024',
       state: 'lose',
       gameId: '1'
     },
     {
-      opponent: 'Игрок id 3',
+      opponent: 'username3',
       date: '23.10.2024',
       state: 'pair',
       gameId: '2'
     },
     {
-      opponent: 'Игрок id 4',
+      opponent: 'username4',
       date: '23.10.2024',
       state: 'pair',
       gameId: '3'
     },
     {
-      opponent: 'Игрок id 5',
+      opponent: 'username5',
       date: '23.10.2024',
       state: 'lose',
       gameId: '4'
     },
     {
-      opponent: 'Игрок id 6',
+      opponent: 'username6',
       date: '23.10.2024',
       state: 'victory',
       gameId: '5'
     },
     {
-      opponent: 'Игрок id 7',
+      opponent: 'username7',
       date: '23.10.2024',
       state: 'victory',
       gameId: '6'
     },
     {
-      opponent: 'Игрок id 8',
+      opponent: 'username8',
       date: '23.10.2024',
       state: 'victory',
       gameId: '7'
@@ -87,9 +87,9 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="flex justify-center gap-4 md:gap-10 mb-10">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mb-10">
           <CustomButton 
-            className="max-w-44 mt-3 mb-6 px-7 py-3" theme='dark'
+            className="max-w-44 mt-3 mb-6 px-7 py-3"
             onClickFunc={() => setShowFindGameModal(!showFindGameModal)}
           >
             Найти игру
@@ -100,20 +100,27 @@ export default function Page() {
           >
             Создать новую
           </CustomButton>
+
+          <CustomButton 
+            className="max-w-48 mt-3 mb-6 px-7 py-3" theme='dark'
+            onClickFunc={() => setShowCreateGameModal(!showCreateGameModal)}
+          >
+            Одиночная игра
+          </CustomButton>
         </div>
 
-        <div className="mb-5 text-center md:text-left">
+        <div className="mb-5 text-center">
           <h2 className="text-2xl font-bold mb-6">Список ваших игр</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 place-items-center">
+          <ul className="grid grid-cols-1 gap-4 w-full">
             {results.map((item) => (
-              <div key={item.gameId} className="p-4 text-center flex flex-col items-center bg-white shadow-md rounded-lg max-w-sm w-full">
-                <h3 className="text-xl font-semibold mb-2">{item.opponent}</h3>
+              <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
+                <h3 className="text-xl font-semibold mb-2">vs {item.opponent}</h3>
                 <p className="max-w-xs text-center">{item.date}</p>
                 <p className="max-w-xs text-center">{item.state}</p>
                 <CustomButton className="max-w-46 my-2 text-center" theme='dark'>Посмотреть доску</CustomButton>
-              </div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
 
         <div className="bg-gray-100 py-16 rounded-lg text-center">
