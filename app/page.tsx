@@ -5,7 +5,9 @@ import CustomLayout from '@/components/CustomLayout';
 import CustomLink from '@/components/CustomLink';
 import FormCreateGame from '@/components/FormCreateGame';
 import FormFindGame from '@/components/FormFindGame';
+import FormReportError from '@/components/FormReportError';
 import Modal from '@/components/Modal';
+import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useState } from 'react';
@@ -64,7 +66,8 @@ export default function Page() {
 
   const [showCreateGameModal, setShowCreateGameModal] = useState(false)
   const [showFindGameModal, setShowFindGameModal] = useState(false)
-
+  const [showReportErrorModal, setShowReportErrorModal] = useState(false)
+  const [showRulesModal, setRulesModal] = useState(false)
 
   return (
     <>
@@ -125,9 +128,9 @@ export default function Page() {
 
         <div className="bg-gray-100 py-16 rounded-lg text-center">
           <h3 className="text-2xl font-bold">Поможем чем сможем</h3>
-          <CustomLink href="contact-us" className="max-w-52 mx-auto mt-3" theme='dark'>Правила игры</CustomLink>
-          <CustomLink href="contact-us" className="max-w-52 mx-auto mt-3" theme='dark'>Частые вопросы</CustomLink>
-          <CustomLink href="contact-us" className="max-w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomLink>
+          <CustomButton onClickFunc={() => setRulesModal(!showRulesModal)} className="max-w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomButton>
+          <CustomLink href="https://go-game.ru/sg/" className="max-w-52 mx-auto mt-3" theme='dark'>Частые вопросы</CustomLink>
+          <CustomButton onClickFunc={() => setShowReportErrorModal(!showReportErrorModal)} className="max-w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomButton>
         </div>
       </CustomLayout>
       <Modal showModal={showCreateGameModal} showModalFunc={setShowCreateGameModal}>
@@ -135,6 +138,12 @@ export default function Page() {
       </Modal>
       <Modal showModal={showFindGameModal} showModalFunc={setShowFindGameModal}>
         <FormFindGame/>
+      </Modal>
+      <Modal showModal={showReportErrorModal} showModalFunc={setShowReportErrorModal}>
+        <FormReportError/>
+      </Modal>
+      <Modal showModal={showRulesModal} showModalFunc={setRulesModal}>
+        <Rules/>
       </Modal>
     </>
   );
