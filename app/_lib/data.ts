@@ -58,13 +58,9 @@ export async function connectToDB() {
   }
 
   if (sshClient) {
-    sshClient.removeAllListeners("keyboard-interactive");
-    sshClient.removeAllListeners("ready");
-    sshClient.removeAllListeners("error");
     sshClient.removeAllListeners();
     sshClient.end;
     sshClient.destroy;
-    sshClient = null
   }
 
   return new Promise<postgres.Sql<{}>>((resolve, reject) => {

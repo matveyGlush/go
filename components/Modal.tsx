@@ -17,8 +17,11 @@ export default function Modal({ children, className = '', showModal, showModalFu
   useLayoutEffect(() => {
       if (dialogRef.current?.open && !showModal) {
         dialogRef.current?.close()
+        document.body.style.overflow = 'auto'
       } else if (!dialogRef.current?.open && showModal) {
         dialogRef.current?.showModal()
+        document.body.style.overflow = 'hidden'
+        document.body.style.height = '100%'
       }
   }, [showModal])
 
@@ -26,7 +29,7 @@ export default function Modal({ children, className = '', showModal, showModalFu
     <>
       <dialog
         ref={dialogRef}
-        className={`relative w-full max-w-lg dialog-backdrop rounded-md p-4 md:p-12 border bg-gray-100 text-black ${className}`}
+        className={`fixed inset-0 w-full max-w-lg dialog-backdrop rounded-md p-4 md:p-12 border bg-gray-100 text-black ${className}`}
       >
         <CloseModalButton closeFunc={showModalFunc}/>
         {children}

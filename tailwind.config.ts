@@ -82,6 +82,15 @@ export default {
         '.game-table tbody tr td:nth-last-child(1), .game-table tbody tr:nth-last-child(1) td': {
           'border': '0px',
         },
+        '.score-underline::before': {
+          'position': 'absolute',
+          'content': '""',
+          'top': '-30px',
+          'left': '50%',
+          'width': '2px',
+          'height': '64px',
+          'background-color': '#000000',
+        },
       });
     }),
   ],

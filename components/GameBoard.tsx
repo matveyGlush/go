@@ -1,17 +1,21 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 
 interface CustomModalProps {
-  size?: number,
+  size?: number;
 }
 
-type TableEl = React.JSX.Element[]
+type TableEl = React.JSX.Element[];
+type GameSizes = {
+  cellSize: string;
+  rockSize: string;
+  rockPosition: string;
+  moveTable: string;
+  circleSize: string;
+}
 
 export default function GameBoard({ size = 9 }: CustomModalProps) {
-
-  let color: string = 'white' 
-  
   const gameSizes = size === 9 ? {
     cellSize: 'cell-size-sm',
     rockSize: 'rock-size-sm',
@@ -24,51 +28,58 @@ export default function GameBoard({ size = 9 }: CustomModalProps) {
     rockPosition: 'rock-position-lg',
     moveTable: 'move-table-right-lg',
     circleSize: 'circle-size-lg',
-  }
+  };
 
   function createGameBoardHtml(): TableEl {
-    let rows: TableEl = []
+    let rows: TableEl = [];
 
-    for(let i = 0; i < size; i++) {
-      let cols: TableEl = []
-      for(let j = 0; j < size; j++) {
-        color = j % 2 === 0 ? 'white' : 'black'
+    for (let i = 0; i < size; i++) {
+      let cols: TableEl = [];
+      for (let j = 0; j < size; j++) {
         cols.push(
-          <td 
-          className={
-            `relative border-[3px] border-gray-600 
-            ${gameSizes.cellSize}`
-          }
-          key={i + ',' + j}
-          >
-            <div className={
-              `absolute rounded-full
-              ${color === 'black' ? 'bg-slate-900': 'bg-white shadow-xl'} 
-              ${gameSizes.rockSize} 
-              ${gameSizes.rockPosition}`
-            }>
-              <span className={
-                `absolute top-[25%] left-[25%] rounded-full border-[1px]
-                ${gameSizes.circleSize} 
-                ${color === 'black' ? 'border-stone-400': 'border-stone-400'}`
-              }/>
-            </div>
-          </td>)
+          <td key={`${i},${j}`} className={`relative border-[3px] border-gray-600 ${gameSizes.cellSize}`}>
+            <Rock gameSizes={gameSizes} />
+          </td>
+        );
       }
-      rows.push(<tr key={i} className="leading-[0]">{cols}</tr>)
+      rows.push(<tr key={i} className="leading-[0]">{cols}</tr>);
     }
 
-    return rows
+    return rows;
   }
 
   return (
-    <table className={
-      `relative game-table border-collapse translate-x-8 my-20 
-      ${gameSizes.moveTable}`
-    }>
+    <table className={`relative game-table border-collapse translate-x-8 my-20 ${gameSizes.moveTable}`}>
       <tbody>
-        { createGameBoardHtml() }
+        {createGameBoardHtml()}
       </tbody>
     </table>
   );
-};
+}
+
+function Rock({ gameSizes }: { gameSizes: GameSizes }) {
+  const [isVisible, setIsVisible] = useState(false);
+  const [color, setColor] = useState(false)
+
+  return (
+    <div 
+      className={`absolute rounded-full cursor-pointer
+        ${isVisible ? (color ? 'bg-slate-900' : 'bg-white shadow-md shadow-zinc-400') : 'bg-transparent'}
+        ${gameSizes.rockSize} 
+        ${gameSizes.rockPosition}`
+      }
+      onClick={() => {
+        console.log(isVisible)
+        setColor(!color)
+        if (!isVisible) setIsVisible(true)
+      }}
+    >
+      {isVisible && (
+        <span 
+          className={`absolute top-[25%] left-[25%] rounded-full border-[1px]
+            ${gameSizes.circleSize} border-stone-400`}
+        />
+      )}
+    </div>
+  );
+}

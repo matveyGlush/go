@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import HideOnScroll from "./HideOnScroll";
 import CustomLink from "@/components/CustomLink";
+import CunstomButton from "./CustomButton";
 
 export default function CustomLayout({ children, className }: { children: ReactNode, className?: string }) {
   const pathname = usePathname();
@@ -17,8 +18,11 @@ export default function CustomLayout({ children, className }: { children: ReactN
             <Link href="/">
               <div className="text-xl font-bold">Игра&nbsp;Го</div>
             </Link>
-            {pathname !== "/account" && (
+            {pathname !== "/account" && pathname !== "/game" && (
               <CustomLink href="auth" theme="dark">Аккаунт</CustomLink>
+            )}
+            {pathname === "/game" && (
+              <CunstomButton theme="dark">Выйти из игры</CunstomButton>
             )}
           </div>
         </header>
