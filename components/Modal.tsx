@@ -23,6 +23,10 @@ export default function Modal({ children, className = '', showModal, showModalFu
         document.body.style.overflow = 'hidden'
         document.body.style.height = '100%'
       }
+
+      return(() => {
+        document.body.style.overflow = 'auto'
+      })
   }, [showModal])
 
   return (

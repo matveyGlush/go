@@ -6,6 +6,8 @@ import CustomLink from '@/components/CustomLink';
 import FormCreateGame from '@/components/FormCreateGame';
 import FormFindGame from '@/components/FormFindGame';
 import FormReportError from '@/components/FormReportError';
+import FormSingleGame from '@/components/FormSingleGame';
+import GameBoard from '@/components/GameBoard';
 import Modal from '@/components/Modal';
 import Rules from '@/components/Rules';
 import Head from 'next/head';
@@ -67,7 +69,9 @@ export default function Page() {
   const [showCreateGameModal, setShowCreateGameModal] = useState(false)
   const [showFindGameModal, setShowFindGameModal] = useState(false)
   const [showReportErrorModal, setShowReportErrorModal] = useState(false)
-  const [showRulesModal, setRulesModal] = useState(false)
+  const [showSingleGameModal, setShowSingleGameModal] = useState(false)
+  const [showRulesModal, setShowRulesModal] = useState(false)
+  const [showGameBoardModal, setShowGameBoardModal] = useState(false)
 
   return (
     <>
@@ -106,7 +110,7 @@ export default function Page() {
 
           <CustomButton 
             className="max-w-48 mt-3 mb-6 px-7 py-3" theme='dark'
-            onClickFunc={() => setShowCreateGameModal(!showCreateGameModal)}
+            onClickFunc={() => setShowSingleGameModal(!showSingleGameModal)}
           >
             Одиночная игра
           </CustomButton>
@@ -120,7 +124,10 @@ export default function Page() {
                 <h3 className="text-xl font-semibold mb-2">vs {item.opponent}</h3>
                 <p className="max-w-xs text-center">{item.date}</p>
                 <p className="max-w-xs text-center">{item.state}</p>
-                <CustomButton className="max-w-46 my-2 text-center" theme='dark'>Посмотреть доску</CustomButton>
+                <CustomButton 
+                onClickFunc={() => setShowGameBoardModal(!showGameBoardModal)} 
+                className="max-w-46 my-2 text-center" theme='dark'
+                >Посмотреть доску</CustomButton>
               </li>
             ))}
           </ul>
@@ -128,7 +135,7 @@ export default function Page() {
 
         <div className="bg-gray-100 py-16 rounded-lg text-center">
           <h3 className="text-2xl font-bold">Поможем чем сможем</h3>
-          <CustomButton onClickFunc={() => setRulesModal(!showRulesModal)} className="w-52 mx-auto mt-3" theme='dark'>Правила</CustomButton>
+          <CustomButton onClickFunc={() => setShowRulesModal(!showRulesModal)} className="w-52 mx-auto mt-3" theme='dark'>Правила</CustomButton>
           <CustomLink href="https://go-game.ru/sg/" className="max-w-52 mx-auto mt-3" theme='dark'>Частые вопросы</CustomLink>
           <CustomButton onClickFunc={() => setShowReportErrorModal(!showReportErrorModal)} className="w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomButton>
         </div>
@@ -139,11 +146,17 @@ export default function Page() {
       <Modal showModal={showFindGameModal} showModalFunc={setShowFindGameModal}>
         <FormFindGame/>
       </Modal>
+      <Modal showModal={showSingleGameModal} showModalFunc={setShowSingleGameModal}>
+        <FormSingleGame/>
+      </Modal>
       <Modal showModal={showReportErrorModal} showModalFunc={setShowReportErrorModal}>
         <FormReportError/>
       </Modal>
-      <Modal showModal={showRulesModal} showModalFunc={setRulesModal}>
+      <Modal showModal={showRulesModal} showModalFunc={setShowRulesModal}>
         <Rules/>
+      </Modal>
+      <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
+        <GameBoard/>
       </Modal>
     </>
   );
