@@ -31,7 +31,7 @@ export default function Game() {
 
   return (
     <CustomLayout className="flex justify-center items-center overflow-hidden">
-      {/* <div>{JSON.stringify(dataUsers)}</div> */}
+      <div>{JSON.stringify(dataUsers)}</div>
       <Score />
       <GameBoard />
       <GameHelp />

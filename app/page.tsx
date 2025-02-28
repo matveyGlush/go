@@ -12,9 +12,12 @@ import Modal from '@/components/Modal';
 import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 export default function Page() {
+  // const router = useRouter()
+  
   const results = [
     {
       opponent: 'username1',
@@ -66,6 +69,24 @@ export default function Page() {
     },
   ]
 
+  const invitations = [
+    {
+      opponent: 'username1',
+      boardSize: 9,
+      gameId: '0'
+    },
+    {
+      opponent: 'username2',
+      boardSize: 19,
+      gameId: '1'
+    },
+    {
+      opponent: 'username3',
+      boardSize: 19,
+      gameId: '2'
+    },
+  ]
+
   const [showCreateGameModal, setShowCreateGameModal] = useState(false)
   const [showFindGameModal, setShowFindGameModal] = useState(false)
   const [showReportErrorModal, setShowReportErrorModal] = useState(false)
@@ -114,6 +135,27 @@ export default function Page() {
           >
             Одиночная игра
           </CustomButton>
+        </div>
+        
+        <div className="mb-12 text-center">
+          <h2 className="text-2xl font-bold mb-6">Список приглашений</h2>
+          <ul className="grid grid-cols-1 gap-4 w-full">
+            {invitations.map((item) => (
+              <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
+                <h3 className="text-xl font-semibold mb-2">vs {item.opponent}</h3>
+                <div>
+                  <CustomButton 
+                  // onClickFunc={() => router.push(`/game`)} 
+                  className="max-w-40 my-2 text-center mr-3" theme='dark'
+                  >Принять</CustomButton>
+                  <CustomButton 
+                  // onClickFunc={} 
+                  className="max-w-40 my-2 text-center bg-red-800 text-white px-5 py-1"
+                  >Отклонить</CustomButton>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="mb-5 text-center">
