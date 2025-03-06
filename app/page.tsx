@@ -12,11 +12,16 @@ import Modal from '@/components/Modal';
 import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { useAuthToken } from './_lib/utils';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function Page() {
-  // const router = useRouter()
+
+  const isAuth = useAuthToken();
+
+  const router = useRouter()
   
   const results = [
     {
@@ -116,36 +121,45 @@ export default function Page() {
         </div>
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mb-10">
+          {isAuth === 'fetching' ? 
+          <LoadingSpinner/> :
           <CustomButton 
             className="max-w-44 mt-3 mb-6 px-7 py-3"
-            onClickFunc={() => setShowFindGameModal(!showFindGameModal)}
+            onClickFunc={() => isAuth === 'in' ? setShowFindGameModal(!showFindGameModal) : router.push('/auth')}
           >
             Найти игру
-          </CustomButton>
+          </CustomButton> 
+          }
+          {isAuth === 'fetching' ? 
+          <div/> :
           <CustomButton 
             className="max-w-44 mt-3 mb-6 px-7 py-3" 
-            onClickFunc={() => setShowCreateGameModal(!showCreateGameModal)}
+            onClickFunc={() => isAuth === 'in' ? setShowCreateGameModal(!showCreateGameModal) : router.push('/auth')}
           >
             Создать новую
           </CustomButton>
-
+          }
+          {isAuth === 'fetching' ? 
+          <div/> :
           <CustomButton 
             className="max-w-48 mt-3 mb-6 px-7 py-3" theme='dark'
-            onClickFunc={() => setShowSingleGameModal(!showSingleGameModal)}
+            onClickFunc={() => isAuth === 'in' ? setShowSingleGameModal(!showSingleGameModal) : router.push('/auth')}
           >
             Одиночная игра
           </CustomButton>
-        </div>
-        
+          }
+        </div>        
         <div className="mb-12 text-center">
           <h2 className="text-2xl font-bold mb-6">Список приглашений</h2>
+          {isAuth === 'fetching' && <LoadingSpinner/>}
+          {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
             {invitations.map((item) => (
               <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
                 <h3 className="text-xl font-semibold mb-2">vs {item.opponent}</h3>
                 <div>
                   <CustomButton 
-                  // onClickFunc={() => router.push(`/game`)} 
+                  onClickFunc={() => router.push(`/game`)} 
                   className="max-w-40 my-2 text-center mr-3" theme='dark'
                   >Принять</CustomButton>
                   <CustomButton 
@@ -155,11 +169,16 @@ export default function Page() {
                 </div>
               </li>
             ))}
-          </ul>
+          </ul> :
+          <p>Тут будут ваши приглашения от других игроков после входа в аккаунт или регистрации! </p>
+          }
+          
         </div>
 
         <div className="mb-5 text-center">
           <h2 className="text-2xl font-bold mb-6">Список прошлых игр</h2>
+          {isAuth === 'fetching' && <LoadingSpinner/>}
+          {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
             {results.map((item) => (
               <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
@@ -172,14 +191,16 @@ export default function Page() {
                 >Посмотреть доску</CustomButton>
               </li>
             ))}
-          </ul>
+          </ul> :
+          <p>Тут будет история ваших игр после входа в аккаунт или регистрации! </p>
+          }
         </div>
 
         <div className="bg-gray-100 py-16 rounded-lg text-center">
           <h3 className="text-2xl font-bold">Поможем чем сможем</h3>
           <CustomButton onClickFunc={() => setShowRulesModal(!showRulesModal)} className="w-52 mx-auto mt-3" theme='dark'>Правила</CustomButton>
           <CustomLink href="https://go-game.ru/sg/" className="max-w-52 mx-auto mt-3" theme='dark'>Частые вопросы</CustomLink>
-          <CustomButton onClickFunc={() => setShowReportErrorModal(!showReportErrorModal)} className="w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomButton>
+          <CustomButton onClickFunc={() => isAuth ? setShowReportErrorModal(!showReportErrorModal) : router.push('/auth')} className="w-52 mx-auto mt-3" theme='dark'>Сообщить об ошибке</CustomButton>
         </div>
       </CustomLayout>
       <Modal showModal={showCreateGameModal} showModalFunc={setShowCreateGameModal}>

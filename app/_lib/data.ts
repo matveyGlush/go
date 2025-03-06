@@ -136,7 +136,7 @@ export async function login(email: string, password: string) {
   }
 }
 
-export async function register(email: string, password: string) {
+export async function registerUser(email: string, password: string) {
   try {
     const sql = await connectToDB();
     const result = await sql`SELECT * FROM register_user(${email}, ${password})`;
@@ -179,6 +179,19 @@ export async function sendInvite(token: string, emailRecipient: string, gameId: 
   try {
     const sql = await connectToDB();
     const result = await sql`SELECT * FROM create_new_game(${token}, ${emailRecipient}, ${gameId}, ${endTime})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    getData();
+    return null;
+  }
+}
+
+export async function isTokenValid(token: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM verify_token(${token})`;
     return result;
   } catch (err) {
     console.error("DB Fetch Error:", err);

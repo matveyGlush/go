@@ -1,16 +1,19 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import HideOnScroll from "./HideOnScroll";
 import CustomLink from "@/components/CustomLink";
 import CunstomButton from "./CustomButton";
 import { useRouter } from 'next/navigation';
+import { useAuthToken } from "@/app/_lib/utils";
 
 export default function CustomLayout({ children, className }: { children: ReactNode, className?: string }) {
   const pathname = usePathname();
   const router = useRouter();
+
+  const isAuth = useAuthToken();
 
   function handleGameExit() {
     const result = confirm("Вы уверены? Выход из игры будет означать техническое поражение!")
@@ -26,7 +29,7 @@ export default function CustomLayout({ children, className }: { children: ReactN
               <div className="text-xl font-bold">Игра&nbsp;Го</div>
             </Link>
             {pathname !== "/account" && pathname !== "/game" && (
-              <CustomLink href="auth" theme="dark">Аккаунт</CustomLink>
+              <CustomLink href={isAuth === 'in' ? 'account' : 'auth'} theme="dark">Аккаунт</CustomLink>
             )}
             {pathname === "/game" && (
               <CunstomButton theme="dark" onClickFunc={() => handleGameExit()}>Выйти из игры</CunstomButton>

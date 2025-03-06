@@ -1,25 +1,32 @@
 'use client'
 import CunstomButton from "@/components/CustomButton";
 import CustomLayout from "@/components/CustomLayout";
+import { logout } from "../_lib/data";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function Account() {
-  const nickname = 'glushkoMat'
+
+  const router = useRouter();
   const rating = Math.floor(34 / 124 * 100) + '%'
+
+  async function handleLogout() {
+    const token = localStorage.getItem('token')
+    const data = await logout(token || '');
+    if (data[0].logout_user === 'SUCCESS: Logged out') {
+      localStorage.removeItem('token')
+      router.push('/auth')
+    } else alert(data[0].logout_user)
+  }
 
   return(
     <CustomLayout>
-      <h2 className="mb-7 text-2xl font-bold">ПРОЦЕНТ ПОБЕД: {rating}</h2>
-      <form className="mb-14">
-        <label htmlFor="nickname">
-          Изменить игровое имя:
-          <input id="nickname" className="font-bold px-2 py-1 ml-3 border-2 text-black rounded-md" defaultValue={nickname}/>
-        </label>
-        <CunstomButton className="px-2 py-1 ml-2 h-fit" theme="dark">Подтвердить</CunstomButton>
-      </form>
-      <div className="flex justify-between flex-col md:max-w-20">
-        <CunstomButton className="px-4 py-2 text-xs mb-2">Сброс пароля</CunstomButton>
-        <CunstomButton className="px-4 py-2 text-xs mb-6">Выйти</CunstomButton>
-        <CunstomButton className="px-4 py-2 bg-red-800 text-white mb-4 text-xs">Удалить аккаунт</CunstomButton>
+      <h2 className="mb text-2xl font-bold text-center">ПРОЦЕНТ ПОБЕД</h2>
+      <h3 className="mb-7 text-9xl font-bold text-center">{rating}</h3>
+      <div className="flex justify-between md:flex-row flex-col md:gap-5 md:mx-auto md:justify-center">
+        <CunstomButton className="px-4 py-2 text-xs mb-6 md:h-16" onClickFunc={() => handleLogout()}>Выйти</CunstomButton>
+        <CunstomButton className="px-4 py-2 text-xs mb-2 md:h-16">Сброс пароля</CunstomButton>
+        <CunstomButton className="px-4 py-2 bg-red-800 text-white mb-4 text-xs md:h-16">Удалить аккаунт</CunstomButton>
       </div>
     </CustomLayout>
   )

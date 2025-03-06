@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import CustomLayout from "@/components/CustomLayout";
 import GameBoard from "@/components/GameBoard";
-import { getData, register, login } from "../_lib/data";
+import { getData, registerUser, login } from "../_lib/data";
 import GameHelp from "@/components/GameHelp";
 import Score from "@/components/Score";
 
@@ -18,12 +18,12 @@ export default function Game() {
     let isMounted = true;
 
     async function fetchData() {
-      const data = await register('client1@test', 'password1');
+      const data = await registerUser('client1@test', 'password1');
       if (isMounted) {
         setToken1(data || []);
       }
 
-      const data2 = await register('client2@test', 'password2');
+      const data2 = await registerUser('client2@test', 'password2');
       if (isMounted) {
         setToken2(data2 || []);
       }

@@ -1,29 +1,29 @@
-// import { Revenue } from './definitions';
+'use client'
 
-// export const formatDateToLocal = (
-//   dateStr: string,
-//   locale: string = 'en-US',
-// ) => {
-//   const date = new Date(dateStr);
-//   const options: Intl.DateTimeFormatOptions = {
-//     day: 'numeric',
-//     month: 'short',
-//     year: 'numeric',
-//   };
-//   const formatter = new Intl.DateTimeFormat(locale, options);
-//   return formatter.format(date);
-// };
+import { useEffect, useState } from "react";
+import { isTokenValid } from "./data";
 
-// export const generateYAxis = (revenue: Revenue[]) => {
-//   // Calculate what labels we need to display on the y-axis
-//   // based on highest record and in 1000s
-//   const yAxisLabels = [];
-//   const highestRecord = Math.max(...revenue.map((month) => month.revenue));
-//   const topLabel = Math.ceil(highestRecord / 1000) * 1000;
+type AuthState = 'in' | 'out' | 'fetching';
 
-//   for (let i = topLabel; i >= 0; i -= 1000) {
-//     yAxisLabels.push(`$${i / 1000}K`);
-//   }
+export const useAuthToken = () => {
+  const [isAuth, setIsAuth] = useState<AuthState>('out');
 
-//   return { yAxisLabels, topLabel };
-// };
+  useEffect(() => {
+    setIsAuth('fetching')
+
+    const storedToken = localStorage.getItem("token");
+
+    async function checkToken(tokenToCheck: string) {
+      const result = await isTokenValid(tokenToCheck)    
+      console.log(result)
+
+      if(result[0].verify_token) setIsAuth('in')
+      else setIsAuth('out')
+    }
+
+    if (storedToken) checkToken(storedToken)
+    else setIsAuth('out')
+  }, []);
+
+  return isAuth;
+};
