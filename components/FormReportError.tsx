@@ -13,7 +13,7 @@ export default function FormReportError() {
 
   const [contactsData, setContactsData] = useState<Inputs | null>(null);
   const [successMsg, setSuccessMsg] = useState<string | undefined>(undefined);
-  console.log(successMsg);
+  // console.log(successMsg);
 
   const {
     register,

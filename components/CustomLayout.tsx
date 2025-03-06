@@ -6,9 +6,16 @@ import { usePathname } from "next/navigation";
 import HideOnScroll from "./HideOnScroll";
 import CustomLink from "@/components/CustomLink";
 import CunstomButton from "./CustomButton";
+import { useRouter } from 'next/navigation';
 
 export default function CustomLayout({ children, className }: { children: ReactNode, className?: string }) {
   const pathname = usePathname();
+  const router = useRouter();
+
+  function handleGameExit() {
+    const result = confirm("Вы уверены? Выход из игры будет означать техническое поражение!")
+    if (result) router.push('/')
+  }
 
   return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
@@ -22,7 +29,7 @@ export default function CustomLayout({ children, className }: { children: ReactN
               <CustomLink href="auth" theme="dark">Аккаунт</CustomLink>
             )}
             {pathname === "/game" && (
-              <CunstomButton theme="dark">Выйти из игры</CunstomButton>
+              <CunstomButton theme="dark" onClickFunc={() => handleGameExit()}>Выйти из игры</CunstomButton>
             )}
           </div>
         </header>

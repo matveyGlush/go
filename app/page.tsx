@@ -159,7 +159,7 @@ export default function Page() {
         </div>
 
         <div className="mb-5 text-center">
-          <h2 className="text-2xl font-bold mb-6">Список ваших игр</h2>
+          <h2 className="text-2xl font-bold mb-6">Список прошлых игр</h2>
           <ul className="grid grid-cols-1 gap-4 w-full">
             {results.map((item) => (
               <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">

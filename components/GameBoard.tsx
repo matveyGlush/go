@@ -69,7 +69,7 @@ function Rock({ gameSizes }: { gameSizes: GameSizes }) {
         ${gameSizes.rockPosition}`
       }
       onClick={() => {
-        console.log(isVisible)
+        // console.log(isVisible)
         setColor(!color)
         if (!isVisible) setIsVisible(true)
       }}
