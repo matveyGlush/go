@@ -29,8 +29,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
 
 
   useEffect(() => {
-    let isMounted = true;
-    if (gameId && isMounted) {
+    if (gameId) {
       const token = localStorage.getItem('token')
   
       async function fetchData() {
@@ -43,11 +42,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     } else if (crossings) {
       setCross(crossings)
     }
-
-    return () => {
-      isMounted = false;
-    };
-  }, [])
+  })
 
   const gameSizes = size === 9 ? {
     cellSize: 'cell-size-sm',
