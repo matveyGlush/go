@@ -12,7 +12,7 @@ import Modal from '@/components/Modal';
 import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { useAuthToken } from './_lib/utils';
 import LoadingSpinner from '@/components/LoadingSpinner';
@@ -79,7 +79,6 @@ export default function Page() {
     async function fetchData() {
       declineInvite(from, to)
     }
-
     fetchData(); // Initial fetch
   }
 

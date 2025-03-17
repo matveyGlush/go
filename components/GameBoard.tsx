@@ -64,7 +64,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
 
   function checkForStone(x: number, y: number): React.JSX.Element {
     console.log('in checkForStone' + (cross === null) + (cross === undefined))
-    console.log(cross)
+    // console.log(cross)
     cross?.forEach(crossing => {
       if(crossing.x == x && crossing.y == y) {
         console.log('found coordinate' + x + '.' + crossing.x + ';' + y + '.' + crossing.y)
@@ -73,6 +73,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
         )
       }
     })
+    console.log('retunr empty')
     return (
       <Rock gameSizes={gameSizes} coordinates={[x, y]}/>
     )
@@ -99,7 +100,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
     return rows;
   }
 
-  function Rock({ gameSizes, coordinates, argIsVisible = true, stoneColor }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, stoneColor?: 'BLACK' | 'WHITE'}) {
+  function Rock({ gameSizes, coordinates, argIsVisible, stoneColor }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, stoneColor?: 'BLACK' | 'WHITE'}) {
     const [isVisible, setIsVisible] = useState<boolean>(false)
   
     function handleMove(x: number, y: number) {
