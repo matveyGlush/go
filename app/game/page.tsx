@@ -9,6 +9,8 @@ import { getGameInfo } from "../_lib/data";
 import GameHelp from "@/components/GameHelp";
 import Score from "@/components/Score";
 import { useSearchParams } from "next/navigation";
+import Modal from "@/components/Modal";
+import GameResult from "@/components/GameResult";
 
 export type Crossings = {
   player_color: 'WHITE' | 'BLACK',
@@ -39,6 +41,9 @@ type GameInfo = {
 } | null
 
 export default function Game() {
+  const [showResultModal, setShowResultModal] = useState<boolean>(false);
+  const [resultMessage, setResultMessage] = useState<string>('');
+
   const [gameInfo, setGameInfo] = useState<GameInfo>(null);
 
   const searchParams = useSearchParams()
@@ -52,6 +57,23 @@ export default function Game() {
       const data = await getGameInfo(token || '', Number(gameId));
       if (isMounted) {
         setGameInfo(data[0].get_game_info || null);
+        switch (gameInfo?.status) {
+          case 'WHITE WIN': {
+            const tempColor = gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color;
+            tempColor === 'WHITE' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
+            setShowResultModal(true);
+          }
+          case 'BLACK WIN': {
+            const tempColor = gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color;
+            tempColor === 'BLACK' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
+            setShowResultModal(true);
+          }
+          case 'TIE': {
+            setResultMessage('ничья!!!!!!')
+            setShowResultModal(true);
+          }
+          default: {}
+        }
       }
     }
 
@@ -75,6 +97,9 @@ export default function Game() {
         turn={gameInfo?.current_turn.color}/>
         <GameHelp />
       </CustomLayout>
+      <Modal showModal={showResultModal} showModalFunc={setShowResultModal}>
+        <GameResult message={resultMessage}/>
+      </Modal>
     </Suspense>
   );
 }

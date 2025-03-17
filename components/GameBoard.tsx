@@ -82,12 +82,25 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
 
   useEffect(() => {
     cross?.forEach(cross => {
-      let elem = document.getElementById(`${cross.x}${cross.y}`)
-      if (cross.player_color === 'BLACK') elem?.classList.add(...['bg-white', 'shadow-md', 'shadow-zinc-400'])
-      else elem?.classList.add(...['bg-slate-900'])
+      let elem = document.getElementById(`${cross.x}${cross.y}`);
+      if (elem) {
+          if (cross.player_color !== 'BLACK') {
+              elem.style.backgroundColor = 'white';
+              elem.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+          } else {
+              elem.style.backgroundColor = 'rgb(15, 23, 42)'; // Equivalent to bg-slate-900
+          }
+      }
 
-      let elemCircle = document.getElementById(`${cross.x}${cross.y}`)
-      elemCircle?.classList.add(...['absolute', 'top-[25%]', 'left-[25%]', 'rounded-full', 'border-[1px]'])
+      // Apply styles to the circle element
+      let elemCircle = document.getElementById(`${cross.x}${cross.y}`);
+      if (elemCircle) {
+          elemCircle.style.position = 'absolute';
+          elemCircle.style.top = '25%';
+          elemCircle.style.left = '25%';
+          elemCircle.style.borderRadius = '50%';
+          elemCircle.style.border = '1px solid';
+      }
     })
   }, [])
 
@@ -104,9 +117,15 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
       async function fetchData() {
         setBoardInactive(true)
 
-        let elem = document.getElementById(`${coordinates[0]}${coordinates[1]}`)
-        if (color === 'BLACK') elem?.classList.add(...['bg-white', 'shadow-md', 'shadow-zinc-400'])
-        else elem?.classList.add(...['bg-slate-900'])
+        let elem = document.getElementById(`${coordinates[0]}${coordinates[1]}`);
+        if (elem) {
+            if (color === 'BLACK') {
+                elem.style.backgroundColor = 'white';
+                elem.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+            } else {
+                elem.style.backgroundColor = 'rgb(15, 23, 42)'; // Equivalent to bg-slate-900
+            }
+        }
         console.log(elem)
 
         const data = await makeMove(token || '', playerId || 0, x, y);

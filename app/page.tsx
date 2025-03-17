@@ -143,7 +143,7 @@ export default function Page() {
           {isAuth === 'fetching' && <LoadingSpinner/>}
           {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
-            {userInfo?.invites.map((item) => (
+            {userInfo?.invites ? userInfo?.invites.map((item) => (
               <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
                 <h3 className="text-xl font-semibold mb-2">{item.sender_email}</h3>
                 <div>
@@ -161,7 +161,7 @@ export default function Page() {
                   <FormNickname gameId={item.game_id}/>
                 </Modal>
               </li>
-            ))}
+            )) : <p>Тут будут ваши приглашения от других игроков</p>}
           </ul> :
           <p>Тут будут ваши приглашения от других игроков после входа в аккаунт или регистрации! </p>
           }
@@ -173,11 +173,11 @@ export default function Page() {
           {isAuth === 'fetching' && <LoadingSpinner/>}
           {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
-            {userInfo?.games.map((item) => (
+            {userInfo?.games ? userInfo?.games.map((item) => (
               <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
                 <h3 className="text-sm font-semibold mb-2">VS {item.players[0]?.email !== userInfo.email ? item.players[0]?.email : item.players[1]?.email}</h3>
-                <p className="max-w-xs text-center">{item.board_size}</p>
-                <p className="max-w-xs text-center">{item.status}</p>
+                <p className="max-w-xs text-sm text-center">{item.board_size}</p>
+                <p className="max-w-xs text-sm text-center">{item.status}</p>
                 <CustomButton 
                 onClickFunc={() => setShowGameBoardModal(!showGameBoardModal)} 
                 className="max-w-46 my-2 text-center" theme='dark'
@@ -187,7 +187,7 @@ export default function Page() {
                   <GameBoard gameId={item.game_id}/>
                 </Modal>
               </li>
-            ))}
+            )) : <p>Тут будет история ваших игр</p>}
           </ul> :
           <p>Тут будет история ваших игр после входа в аккаунт или регистрации! </p>
           }

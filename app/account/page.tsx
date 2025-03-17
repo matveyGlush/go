@@ -8,7 +8,6 @@ import { Suspense, useEffect, useState } from "react";
 export default function Account() {
 
   const router = useRouter();
-  const rating = Math.floor(34 / 124 * 100) + '%'
 
   async function handleLogout() {
     const token = localStorage.getItem('token')
@@ -45,8 +44,8 @@ export default function Account() {
   return(
     <Suspense>
       <CustomLayout>
-        <h2 className="mb text-2xl font-bold text-center">ПРОЦЕНТ ПОБЕД</h2>
-        {user && <h3 className="mb-7 text-9xl font-bold text-center">{Math.round((user?.wins / user?.total_games) * 100)}</h3>}
+        <h2 className="mb-4 text-2xl font-bold text-center">ПРОЦЕНТ ПОБЕД</h2>
+        {user && <h3 className="mb-7 text-9xl font-bold text-center">{Math.round((user.wins / user.total_games) * 100)}</h3>}
         <div className="flex justify-between md:flex-row flex-col md:gap-5 md:mx-auto md:justify-center">
           <CunstomButton className="px-4 py-2 text-xs mb-6 md:h-16" onClickFunc={() => handleLogout()}>Выйти</CunstomButton>
           <CunstomButton className="px-4 py-2 text-xs mb-2 md:h-16">Сброс пароля</CunstomButton>
