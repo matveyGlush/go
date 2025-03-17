@@ -65,7 +65,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   };
 
   function checkForStone(x: number, y: number): React.JSX.Element {
-    console.log('in checkForStone' + cross)
+    console.log('in checkForStone' + (cross === null) + (cross === undefined))
     cross?.forEach(crossing => {
       if(crossing.x === x && crossing.y === y) {
         return (
@@ -79,6 +79,9 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   }
 
   function createGameBoardHtml(): TableEl {
+    if (!cross) {
+      console.log('trouble')
+    }
     let rows: TableEl = [];
 
     for (let i = 0; i < size; i++) {
