@@ -123,17 +123,17 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
       fetchData(); // Initial fetch
     }
 
-    if (argIsVisible) {
+    if (stoneColor) {
       console.log('setting is visible!')
       setIsVisible(true)
     }
 
-    // useEffect(() => {
-    //   if (argIsVisible) {
-    //     console.log('setting is visible!')
-    //     setIsVisible(true)
-    //   }
-    // }, [])
+    useEffect(() => {
+      if (stoneColor) {
+        console.log('setting is visible!')
+        setIsVisible(true)
+      }
+    }, [])
   
     return (
       <div 
