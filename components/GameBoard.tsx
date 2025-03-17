@@ -69,7 +69,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
       if(crossing.x == x && crossing.y == y) {
         console.log('found coordinate' + x + '.' + crossing.x + ';' + y + '.' + crossing.y)
         return (
-          <Rock gameSizes={gameSizes} coordinates={[x, y]} color={crossing.player_color} argIsVisible={true}/>
+          <Rock gameSizes={gameSizes} coordinates={[x, y]} stoneColor={crossing.player_color} argIsVisible={true}/>
         )
       }
     })
@@ -99,7 +99,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
     return rows;
   }
 
-  function Rock({ gameSizes, coordinates, argIsVisible, color }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, color?: 'BLACK' | 'WHITE'}) {
+  function Rock({ gameSizes, coordinates, argIsVisible = true, stoneColor }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, stoneColor?: 'BLACK' | 'WHITE'}) {
     const [isVisible, setIsVisible] = useState<boolean>(false)
   
     function handleMove(x: number, y: number) {
@@ -132,7 +132,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
     return (
       <div 
         className={`absolute rounded-full cursor-pointer
-          ${isVisible ? (color === 'BLACK' ? 'bg-slate-900' : 'bg-white shadow-md shadow-zinc-400') : 'bg-transparent'}
+          ${isVisible ? (stoneColor === 'BLACK' ? 'bg-slate-900' : 'bg-white shadow-md shadow-zinc-400') : 'bg-transparent'}
           ${gameSizes.rockSize} 
           ${gameSizes.rockPosition}`
         }
