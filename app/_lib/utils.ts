@@ -24,5 +24,5 @@ export const useAuthToken = () => {
     else setIsAuth('out')
   }, []);
 
-  return 'in';
+  return isAuth;
 };
