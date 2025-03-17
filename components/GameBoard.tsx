@@ -47,7 +47,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
       console.log(crossings)
       setCross(crossings)
     }
-  }, [])
+  }, [crossings])
 
   const gameSizes = size === 9 ? {
     cellSize: 'cell-size-sm',
