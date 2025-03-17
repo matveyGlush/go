@@ -59,6 +59,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   };
 
   function checkForStone(x: number, y: number): React.JSX.Element {
+    console.log(cross)
     cross?.forEach(crossing => {
       if(crossing.x === x && crossing.y === y) {
         return (
@@ -114,7 +115,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
 
     useEffect(() => {
       if (argIsVisible) setIsVisible(true)
-    }, [])
+    })
   
     return (
       <div 
@@ -124,7 +125,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
           ${gameSizes.rockPosition}`
         }
         onClick={() => {
-          // console.log(isVisible)
+          console.log(isVisible)
           handleMove(coordinates[0], coordinates[1])
           if (!isVisible) setIsVisible(true)
         }}
@@ -138,8 +139,6 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
       </div>
     );
   }
-
-
 
   return (
     <table className={`relative game-table border-collapse translate-x-8 my-20 ${gameSizes.moveTable}`}>
