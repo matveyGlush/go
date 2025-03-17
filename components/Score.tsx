@@ -10,12 +10,12 @@ type Player = {
   is_caller: boolean,
 }
 
-export default function Score({ player1, player2, curr, time} : { player1: any, player2: any, curr?: CurrTurn, time: number }) {
+export default function Score({ player1, player2, curr, time } : { player1: any, player2: any, curr?: CurrTurn, time: number }) {
 
   return (
-    <div className='w-full flex flex-col items-center mt-10'>
+    <div className='w-full flex flex-col items-center mt-8'>
       <span>Сейчас ходят {curr?.color === 'BLACK' ? 'черные' : 'белые'}</span>
-      <span>Осталось секунд на ход: {time}</span>
+      <span className='inline-block mb-2'>Осталось секунд на ход: {time}</span>
       <div className='w-7/12 flex justify-between mb-2'>
         <span>{player1?.nickname}</span>
         <span>{player1?.color}</span>

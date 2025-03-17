@@ -107,6 +107,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
         let elem = document.getElementById(`${coordinates[0]}${coordinates[1]}`)
         if (color === 'BLACK') elem?.classList.add(...['bg-white', 'shadow-md', 'shadow-zinc-400'])
         else elem?.classList.add(...['bg-slate-900'])
+        console.log(elem)
 
         const data = await makeMove(token || '', playerId || 0, x, y);
         setBoardInactive(false)

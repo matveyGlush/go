@@ -114,7 +114,7 @@ export default function Page() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10 mb-10">
           {isAuth === 'fetching' ? 
           <LoadingSpinner/> :
-          <CustomButton 
+          (isAuth === 'in') && <CustomButton 
             className="max-w-44 mt-3 mb-6 px-7 py-3"
             onClickFunc={() => isAuth === 'in' ? setShowFindGameModal(!showFindGameModal) : router.push('/auth')}
           >
@@ -175,7 +175,7 @@ export default function Page() {
           <ul className="grid grid-cols-1 gap-4 w-full">
             {userInfo?.games.map((item) => (
               <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
-                <h3 className="text-xl font-semibold mb-2">{item.players[0].email} vs {item.players[1]?.email}</h3>
+                <h3 className="text-sm font-semibold mb-2">VS {item.players[0]?.email !== userInfo.email ? item.players[0]?.email : item.players[1]?.email}</h3>
                 <p className="max-w-xs text-center">{item.board_size}</p>
                 <p className="max-w-xs text-center">{item.status}</p>
                 <CustomButton 
