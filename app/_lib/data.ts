@@ -109,20 +109,6 @@ export async function connectToDB() {
   });
 }
 
-// Function to fetch data
-export async function getData() {
-  try {
-    const sql = await connectToDB();
-    const result = await sql`SELECT * FROM users`;
-    return result;
-  } catch (err) {
-    console.error("DB Fetch Error:", err);
-    sql = null;
-    getData();
-    return null;
-  }
-}
-
 export async function login(email: string, password: string) {
   try {
     const sql = await connectToDB();
@@ -131,7 +117,6 @@ export async function login(email: string, password: string) {
   } catch (err) {
     console.error("DB Fetch Error:", err);
     sql = null;
-    getData();
     return null;
   }
 }
@@ -144,7 +129,6 @@ export async function registerUser(email: string, password: string) {
   } catch (err) {
     console.error("DB Fetch Error:", err);
     sql = null;
-    getData();
     return null;
   }
 }
@@ -157,7 +141,6 @@ export async function logout(token: string) {
   } catch (err) {
     console.error("DB Fetch Error:", err);
     sql = null;
-    getData();
     return null;
   }
 }
@@ -170,20 +153,18 @@ export async function newGame(sessionToken: string, boardSize: number, timeLimit
   } catch (err) {
     console.error("DB Fetch Error:", err);
     sql = null;
-    getData();
     return null;
   }
 }
 
-export async function sendInvite(token: string, emailRecipient: string, gameId: number, endTime: Date) {
+export async function sendInvite(token: string, emailRecipient: string, gameId: number, endTimeInSeconds: number) {
   try {
     const sql = await connectToDB();
-    const result = await sql`SELECT * FROM create_new_game(${token}, ${emailRecipient}, ${gameId}, ${endTime})`;
+    const result = await sql`SELECT * FROM send_invite(${token}, ${emailRecipient}, ${gameId}, ${endTimeInSeconds})`;
     return result;
   } catch (err) {
     console.error("DB Fetch Error:", err);
     sql = null;
-    getData();
     return null;
   }
 }
@@ -196,8 +177,102 @@ export async function isTokenValid(token: string) {
   } catch (err) {
     console.error("DB Fetch Error:", err);
     sql = null;
-    getData();
     return null;
   }
 }
 
+export async function createNewGame(token: string, boardSize: number, timeLimitInSeconds: number, nickname: string, color: 'BLACK' | 'WHITE') {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM create_new_game(${token}, ${boardSize}, ${timeLimitInSeconds}, ${nickname}, ${color})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function joinCreatedGame(token: string, gameId: number, nickname: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM join_created_game(${token}, ${gameId}, ${nickname})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function makeMove(token: string, playerId: number, x_coordinate: number, y_coordinate: number) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM make_move(${token}, ${playerId}, ${x_coordinate}, ${y_coordinate})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function getUserInfo(token: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM get_user_info(${token})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function getGameInfo(token: string, gameId: number) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM get_game_info(${token}, ${gameId})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function findGamesWithoutInvite(token: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM find_games_without_invite(${token})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function exitGame(token: string, gameId: number) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM exit_game(${token}, ${gameId})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+
+export async function getUserStats(token: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM get_user_stats(${token})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}

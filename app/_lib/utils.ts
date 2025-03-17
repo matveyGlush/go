@@ -15,7 +15,6 @@ export const useAuthToken = () => {
 
     async function checkToken(tokenToCheck: string) {
       const result = await isTokenValid(tokenToCheck)    
-      console.log(result)
 
       if(result[0].verify_token) setIsAuth('in')
       else setIsAuth('out')

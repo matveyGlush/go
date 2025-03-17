@@ -2,22 +2,29 @@
 
 import { ReactNode, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import HideOnScroll from "./HideOnScroll";
 import CustomLink from "@/components/CustomLink";
 import CunstomButton from "./CustomButton";
 import { useRouter } from 'next/navigation';
 import { useAuthToken } from "@/app/_lib/utils";
+import { exitGame } from "@/app/_lib/data";
 
 export default function CustomLayout({ children, className }: { children: ReactNode, className?: string }) {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams()
+  const gameId = searchParams.get('id')
 
   const isAuth = useAuthToken();
 
   function handleGameExit() {
     const result = confirm("Вы уверены? Выход из игры будет означать техническое поражение!")
-    if (result) router.push('/')
+    const token = localStorage.getItem('token')
+    if (result) {
+      exitGame(token || '', Number(gameId))
+      router.push('/')
+    }
   }
 
   return (

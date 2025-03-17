@@ -13,16 +13,66 @@ import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthToken } from './_lib/utils';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { getUserInfo } from './_lib/data';
+
+interface Player {
+  email: string;
+  color: string;
+  score: number;
+}
+
+interface Game {
+  game_id: number;
+  board_size: number;
+  status: string;
+  players: Player[];
+}
+
+interface Invite {
+  game_id: number;
+  sender_email: string;
+  recipient_email: string;
+  time_left: number;
+}
+
+interface UserResponse {
+  email: string;
+  games: Game[];
+  invites: Invite[];
+}
 
 export default function Page() {
 
-  const isAuth = useAuthToken();
+  let isAuth = useAuthToken();
+
+  const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
 
   const router = useRouter()
-  
+
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    
+    async function fetchData() {
+      const userData = await getUserInfo(token || '');
+      // const gameId = JSON.stringify(response);
+      if (userData[0].get_user_info.error) {
+        alert(`Ошибка. ${userData[0].get_user_info.error}`)
+        return
+      }
+      setUserInfo(userData[0].get_user_info)
+    }
+
+    fetchData(); // Initial fetch
+    const interval = setInterval(fetchData, 3000);
+
+    return () => {
+      clearInterval(interval);
+    }
+  }, [isAuth])
+      
   const results = [
     {
       opponent: 'username1',
@@ -130,8 +180,7 @@ export default function Page() {
             Найти игру
           </CustomButton> 
           }
-          {isAuth === 'fetching' ? 
-          <div/> :
+          {isAuth === 'in' &&
           <CustomButton 
             className="max-w-44 mt-3 mb-6 px-7 py-3" 
             onClickFunc={() => isAuth === 'in' ? setShowCreateGameModal(!showCreateGameModal) : router.push('/auth')}
@@ -139,24 +188,23 @@ export default function Page() {
             Создать новую
           </CustomButton>
           }
-          {isAuth === 'fetching' ? 
-          <div/> :
+          {/* {isAuth === 'in' && 
           <CustomButton 
             className="max-w-48 mt-3 mb-6 px-7 py-3" theme='dark'
             onClickFunc={() => isAuth === 'in' ? setShowSingleGameModal(!showSingleGameModal) : router.push('/auth')}
           >
             Одиночная игра
           </CustomButton>
-          }
+          } */}
         </div>        
         <div className="mb-12 text-center">
           <h2 className="text-2xl font-bold mb-6">Список приглашений</h2>
           {isAuth === 'fetching' && <LoadingSpinner/>}
           {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
-            {invitations.map((item) => (
-              <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
-                <h3 className="text-xl font-semibold mb-2">vs {item.opponent}</h3>
+            {userInfo?.invites.map((item) => (
+              <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
+                <h3 className="text-xl font-semibold mb-2">vs {item.sender_email}</h3>
                 <div>
                   <CustomButton 
                   onClickFunc={() => router.push(`/game`)} 
@@ -180,11 +228,11 @@ export default function Page() {
           {isAuth === 'fetching' && <LoadingSpinner/>}
           {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
-            {results.map((item) => (
-              <li key={item.gameId} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
-                <h3 className="text-xl font-semibold mb-2">vs {item.opponent}</h3>
-                <p className="max-w-xs text-center">{item.date}</p>
-                <p className="max-w-xs text-center">{item.state}</p>
+            {userInfo?.games.map((item) => (
+              <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
+                <h3 className="text-xl font-semibold mb-2">{item.players[0].email} vs {item.players[1]?.email}</h3>
+                <p className="max-w-xs text-center">{item.board_size}</p>
+                <p className="max-w-xs text-center">{item.status}</p>
                 <CustomButton 
                 onClickFunc={() => setShowGameBoardModal(!showGameBoardModal)} 
                 className="max-w-46 my-2 text-center" theme='dark'

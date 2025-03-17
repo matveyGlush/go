@@ -3,60 +3,69 @@
 import { useState, useEffect } from "react";
 import CustomLayout from "@/components/CustomLayout";
 import GameBoard from "@/components/GameBoard";
-import { getData, registerUser, login } from "../_lib/data";
+import { getGameInfo, registerUser, login } from "../_lib/data";
 import GameHelp from "@/components/GameHelp";
 import Score from "@/components/Score";
+import { useSearchParams } from "next/navigation";
+
+export type Crossings = {
+  player_color: 'WHITE' | 'BLACK',
+  x: number,
+  y: number
+} []
+
+type Player = {
+  player_id: number,
+  nickname: string,
+  color: 'WHITE' | 'BLACK',
+  is_caller: boolean,
+} []
+
+export type CurrTurn = {
+  player_id: number,
+  color: 'WHITE' | 'BLACK',
+  time_left: number,
+}
+
+type GameInfo = {
+  status: string,
+  board_size: number,
+  players: Player[],
+  crossings: Crossings,
+  current_turn: CurrTurn,
+  time_left: number
+} | null
 
 export default function Game() {
-  const [token1, setToken1] = useState<any[]>([]);
-  const [token2, setToken2] = useState<any[]>([]);
+  const [gameInfo, setGameInfo] = useState<GameInfo>(null);
 
-  const [login1, setLogin1] = useState<any[]>([]);
-  const [login2, setLogin2] = useState<any[]>([]);
+  const searchParams = useSearchParams()
+  const gameId = searchParams.get('id')
 
   useEffect(() => {
     let isMounted = true;
+    const token = localStorage.getItem('token')
 
     async function fetchData() {
-      const data = await registerUser('client1@test', 'password1');
+      const data = await getGameInfo(token || '', Number(gameId));
       if (isMounted) {
-        setToken1(data || []);
-      }
-
-      const data2 = await registerUser('client2@test', 'password2');
-      if (isMounted) {
-        setToken2(data2 || []);
-      }
-
-      const data3 = await login('client1@test', 'password1');
-      if (isMounted) {
-        setLogin1(data3 || []);
-      }
-
-      const data4 = await login('client2@test', 'password2');
-      if (isMounted) {
-        setLogin2(data4 || []);
+        setGameInfo(data[0].get_game_info || null);
       }
     }
 
     fetchData(); // Initial fetch
-    // const interval = setInterval(fetchData, 5000);
+    const interval = setInterval(fetchData, 3000);
 
     return () => {
       isMounted = false;
-      // clearInterval(interval);
+      clearInterval(interval);
     };
   }, []);
 
   return (
     <CustomLayout className="flex justify-center items-center overflow-hidden">
-      <div>{JSON.stringify(token1)}</div>
-      <div>{JSON.stringify(token2)}</div>
-      <div>{JSON.stringify(login1)}</div>
-      <div>{JSON.stringify(login2)}</div>
-
-      <Score />
-      <GameBoard />
+      {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
+      <GameBoard crossings={gameInfo?.crossings}/>
       <GameHelp />
     </CustomLayout>
   );
