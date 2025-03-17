@@ -23,7 +23,7 @@ type GameSizes = {
   circleSize: string;
 }
 
-export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK", x: 2, y: 5}], gameId, playerId, color, turn }: CustomModalProps) {
+export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK", x: 2, y: 5}], playerId, color, turn }: CustomModalProps) {
 
   const searchParams = useSearchParams()
   const gameToCheck = searchParams.get('gameToCheck')
@@ -124,8 +124,10 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     }
 
     useEffect(() => {
-      console.log('setting is visible!')
-      if (argIsVisible) setIsVisible(true)
+      if (argIsVisible) {
+        console.log('setting is visible!')
+        setIsVisible(true)
+      }
     }, [])
   
     return (
