@@ -62,15 +62,18 @@ export default function Game() {
             const tempColor = gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color;
             tempColor === 'WHITE' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
             setShowResultModal(true);
+            break;
           }
           case 'BLACK WIN': {
             const tempColor = gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color;
             tempColor === 'BLACK' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
             setShowResultModal(true);
+            break;
           }
           case 'TIE': {
             setResultMessage('ничья!!!!!!')
             setShowResultModal(true);
+            break;
           }
           default: {}
         }
