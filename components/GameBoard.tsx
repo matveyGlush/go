@@ -67,9 +67,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   function checkForStone(x: number, y: number): React.JSX.Element {
     console.log('in checkForStone' + (cross === null) + (cross === undefined))
     cross?.forEach(crossing => {
-      console.log('serching crossing.x:' + crossing.x)
-      console.log('serching arument.x:' + x)
-      if(crossing.x === x && crossing.y === y) {
+      if(crossing.x == x && crossing.y == y) {
         console.log('found coordinate')
         return (
           <Rock gameSizes={gameSizes} coordinates={[x, y]} color={crossing.player_color} argIsVisible={true}/>
