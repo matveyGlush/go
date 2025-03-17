@@ -124,6 +124,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     }
 
     useEffect(() => {
+      console.log('setting is visible!')
       if (argIsVisible) setIsVisible(true)
     }, [])
   
