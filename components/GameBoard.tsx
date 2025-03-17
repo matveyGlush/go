@@ -68,7 +68,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     console.log('in checkForStone' + (cross === null) + (cross === undefined))
     cross?.forEach(crossing => {
       if(crossing.x == x && crossing.y == y) {
-        console.log('found coordinate')
+        console.log('found coordinate' + x + '.' + crossing.x + ';' + y + '.' + crossing.y)
         return (
           <Rock gameSizes={gameSizes} coordinates={[x, y]} color={crossing.player_color} argIsVisible={true}/>
         )
