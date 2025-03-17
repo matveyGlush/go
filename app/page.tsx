@@ -13,7 +13,7 @@ import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useAuthToken } from './_lib/utils';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { getUserInfo } from './_lib/data';
@@ -150,7 +150,7 @@ export default function Page() {
   const [showGameBoardModal, setShowGameBoardModal] = useState(false)
 
   return (
-    <>
+    <Suspense>
       <Head>
         <meta property="og:image" content="<generated>" />
         <meta property="og:image:type" content="<generated>" />
@@ -269,6 +269,6 @@ export default function Page() {
       <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
         <GameBoard/>
       </Modal>
-    </>
+    </Suspense>
   );
 }
