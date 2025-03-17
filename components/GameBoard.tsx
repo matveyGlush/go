@@ -115,7 +115,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
 
     useEffect(() => {
       if (argIsVisible) setIsVisible(true)
-    })
+    }, [])
   
     return (
       <div 
@@ -143,7 +143,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   return (
     <table className={`relative game-table border-collapse translate-x-8 my-20 ${gameSizes.moveTable}`}>
       <tbody>
-        {createGameBoardHtml()}
+        {cross && createGameBoardHtml()}
       </tbody>
     </table>
   );
