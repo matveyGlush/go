@@ -34,7 +34,6 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
 
   useEffect(() => {
     if (gameToCheck) {
-      
       const token = localStorage.getItem('token')
   
       async function fetchData() {
@@ -44,6 +43,8 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
       console.log('fetching in use eff by game to check from url')
       fetchData(); // Initial fetch
     } else if (crossings) {
+      console.log('crossings from arg')
+      console.log(crossings)
       setCross(crossings)
     }
   }, [])
