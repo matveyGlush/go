@@ -5,7 +5,7 @@ import {Suspense} from "react";
 import { useState, useEffect } from "react";
 import CustomLayout from "@/components/CustomLayout";
 import GameBoard from "@/components/GameBoard";
-import { getGameInfo, registerUser, login } from "../_lib/data";
+import { getGameInfo } from "../_lib/data";
 import GameHelp from "@/components/GameHelp";
 import Score from "@/components/Score";
 import { useSearchParams } from "next/navigation";
@@ -21,7 +21,7 @@ type Player = {
   nickname: string,
   color: 'WHITE' | 'BLACK',
   is_caller: boolean,
-} []
+}
 
 export type CurrTurn = {
   player_id: number,
@@ -68,7 +68,7 @@ export default function Game() {
     <Suspense>
       <CustomLayout className="flex justify-center items-center overflow-hidden">
         {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
-        <GameBoard crossings={gameInfo?.crossings}/>
+        <GameBoard crossings={gameInfo?.crossings} playerId={gameInfo?.players[0].is_caller ? gameInfo?.players[0].player_id : gameInfo?.players[1]?.player_id} turn={gameInfo?.current_turn.color}/>
         <GameHelp />
       </CustomLayout>
     </Suspense>

@@ -276,3 +276,15 @@ export async function getUserStats(token: string) {
     return null;
   }
 }
+
+export async function declineInvite(from: string, to: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`DELETE FROM Invites WHERE email=${from} AND email_recipient=${to}`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}

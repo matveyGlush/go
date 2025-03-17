@@ -16,7 +16,8 @@ import { useRouter } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { useAuthToken } from './_lib/utils';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { getUserInfo } from './_lib/data';
+import { declineInvite, getUserInfo, joinCreatedGame } from './_lib/data';
+import FormNickname from '@/components/FormNickname';
 
 interface Player {
   email: string;
@@ -59,7 +60,6 @@ export default function Page() {
       const userData = await getUserInfo(token || '');
       // const gameId = JSON.stringify(response);
       if (userData[0].get_user_info.error) {
-        alert(`Ошибка. ${userData[0].get_user_info.error}`)
         return
       }
       setUserInfo(userData[0].get_user_info)
@@ -72,75 +72,14 @@ export default function Page() {
       clearInterval(interval);
     }
   }, [isAuth])
-      
-  const results = [
-    {
-      opponent: 'username1',
-      date: '23.10.2024',
-      state: 'victory',
-      gameId: '0'
-    },
-    {
-      opponent: 'username2',
-      date: '23.10.2024',
-      state: 'lose',
-      gameId: '1'
-    },
-    {
-      opponent: 'username3',
-      date: '23.10.2024',
-      state: 'pair',
-      gameId: '2'
-    },
-    {
-      opponent: 'username4',
-      date: '23.10.2024',
-      state: 'pair',
-      gameId: '3'
-    },
-    {
-      opponent: 'username5',
-      date: '23.10.2024',
-      state: 'lose',
-      gameId: '4'
-    },
-    {
-      opponent: 'username6',
-      date: '23.10.2024',
-      state: 'victory',
-      gameId: '5'
-    },
-    {
-      opponent: 'username7',
-      date: '23.10.2024',
-      state: 'victory',
-      gameId: '6'
-    },
-    {
-      opponent: 'username8',
-      date: '23.10.2024',
-      state: 'victory',
-      gameId: '7'
-    },
-  ]
 
-  const invitations = [
-    {
-      opponent: 'username1',
-      boardSize: 9,
-      gameId: '0'
-    },
-    {
-      opponent: 'username2',
-      boardSize: 19,
-      gameId: '1'
-    },
-    {
-      opponent: 'username3',
-      boardSize: 19,
-      gameId: '2'
-    },
-  ]
+  function handleDecline(from: string, to: string) {
+    async function fetchData() {
+      declineInvite(from, to)
+    }
+
+    fetchData(); // Initial fetch
+  }
 
   const [showCreateGameModal, setShowCreateGameModal] = useState(false)
   const [showFindGameModal, setShowFindGameModal] = useState(false)
@@ -148,6 +87,8 @@ export default function Page() {
   const [showSingleGameModal, setShowSingleGameModal] = useState(false)
   const [showRulesModal, setShowRulesModal] = useState(false)
   const [showGameBoardModal, setShowGameBoardModal] = useState(false)
+  const [showNicknameModal, setShowNicknameModal] = useState(false)
+
 
   return (
     <Suspense>
@@ -204,17 +145,21 @@ export default function Page() {
           <ul className="grid grid-cols-1 gap-4 w-full">
             {userInfo?.invites.map((item) => (
               <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
-                <h3 className="text-xl font-semibold mb-2">vs {item.sender_email}</h3>
+                <h3 className="text-xl font-semibold mb-2">{item.sender_email}</h3>
                 <div>
                   <CustomButton 
-                  onClickFunc={() => router.push(`/game`)} 
+                  onClickFunc={() => setShowNicknameModal(true)} 
                   className="max-w-40 my-2 text-center mr-3" theme='dark'
                   >Принять</CustomButton>
                   <CustomButton 
-                  // onClickFunc={} 
+                  onClickFunc={() => handleDecline(item.recipient_email, item.sender_email)} 
                   className="max-w-40 my-2 text-center bg-red-800 text-white px-5 py-1"
                   >Отклонить</CustomButton>
                 </div>
+
+                <Modal showModal={showNicknameModal} showModalFunc={setShowNicknameModal}>
+                  <FormNickname gameId={item.game_id}/>
+                </Modal>
               </li>
             ))}
           </ul> :
@@ -237,6 +182,10 @@ export default function Page() {
                 onClickFunc={() => setShowGameBoardModal(!showGameBoardModal)} 
                 className="max-w-46 my-2 text-center" theme='dark'
                 >Посмотреть доску</CustomButton>
+
+                <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
+                  <GameBoard gameId={item.game_id}/>
+                </Modal>
               </li>
             ))}
           </ul> :
@@ -265,9 +214,6 @@ export default function Page() {
       </Modal>
       <Modal showModal={showRulesModal} showModalFunc={setShowRulesModal}>
         <Rules/>
-      </Modal>
-      <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
-        <GameBoard/>
       </Modal>
     </Suspense>
   );

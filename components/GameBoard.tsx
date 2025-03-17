@@ -1,11 +1,16 @@
 "use client"
 
+import { getGameInfo, makeMove } from '@/app/_lib/data';
 import { Crossings } from '@/app/game/page';
 import React, { useEffect, useState } from 'react';
 
 interface CustomModalProps {
   size?: number;
   crossings?: Crossings;
+  gameId?: number
+  playerId?: number;
+  color?: string;
+  turn?: string
 }
 
 type TableEl = React.JSX.Element[];
@@ -17,7 +22,32 @@ type GameSizes = {
   circleSize: string;
 }
 
-export default function GameBoard({ size = 9, crossings = [] }: CustomModalProps) {
+export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK", x: 2, y: 5}], gameId, playerId, color, turn }: CustomModalProps) {
+
+  const [cross, setCross] = useState<Crossings | null>()
+  const [boardInactive, setBoardInactive] = useState<boolean>(false)
+
+
+  useEffect(() => {
+    let isMounted = true;
+    if (gameId && isMounted) {
+      const token = localStorage.getItem('token')
+  
+      async function fetchData() {
+        const data = await getGameInfo(token || '', Number(gameId));
+        setCross(data[0].get_game_info.crossings || null);
+      }
+  
+      fetchData(); // Initial fetch
+    } else if (crossings) {
+      setCross(crossings)
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [])
+
   const gameSizes = size === 9 ? {
     cellSize: 'cell-size-sm',
     rockSize: 'rock-size-sm',
@@ -51,12 +81,59 @@ export default function GameBoard({ size = 9, crossings = [] }: CustomModalProps
   }
 
   useEffect(() => {
-    crossings.forEach(cross => {
+    cross?.forEach(cross => {
       let elem = document.getElementById(`${cross.x}${cross.y}`)
       if (cross.player_color === 'BLACK') elem?.classList.add(...['bg-white', 'shadow-md', 'shadow-zinc-400'])
       else elem?.classList.add(...['bg-slate-900'])
+
+      let elemCircle = document.getElementById(`${cross.x}${cross.y}`)
+      elemCircle?.classList.add(...['absolute', 'top-[25%]', 'left-[25%]', 'rounded-full', 'border-[1px]'])
     })
-  }, [crossings])
+  }, [])
+
+  function Rock({ gameSizes, coordinates }: { gameSizes: GameSizes, coordinates: [number, number] }) {
+  
+    function handleMove(x: number, y: number) {
+      if (turn !== color) {
+        alert('Not your turn')
+        return
+      }
+      if (boardInactive) return
+
+      const token = localStorage.getItem('token')
+      async function fetchData() {
+        setBoardInactive(true)
+
+        let elem = document.getElementById(`${coordinates[0]}${coordinates[1]}`)
+        if (color === 'BLACK') elem?.classList.add(...['bg-white', 'shadow-md', 'shadow-zinc-400'])
+        else elem?.classList.add(...['bg-slate-900'])
+
+        const data = await makeMove(token || '', playerId || 0, x, y);
+        setBoardInactive(false)
+      }
+  
+      fetchData(); // Initial fetch
+    }
+  
+    return (
+      <div 
+        id={`${coordinates[0]}${coordinates[1]}`}
+        className={`absolute rounded-full cursor-pointer
+          ${gameSizes.rockSize} 
+          ${gameSizes.rockPosition}`
+        }
+        onClick={() => {
+          // console.log(isVisible)
+          handleMove(coordinates[0], coordinates[1])
+        }}
+      >
+          <span 
+            id={`${coordinates[0]}+${coordinates[1]}`}
+            className={`${gameSizes.circleSize} border-stone-400`}
+          />
+      </div>
+    );
+  }
 
 
 
@@ -66,34 +143,5 @@ export default function GameBoard({ size = 9, crossings = [] }: CustomModalProps
         {createGameBoardHtml()}
       </tbody>
     </table>
-  );
-}
-
-function Rock({ gameSizes, coordinates }: { gameSizes: GameSizes, coordinates: [number, number] }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const [color, setColor] = useState(false);
-
-  return (
-    <div 
-      id={`${coordinates[0]}${coordinates[1]}`}
-      className={`absolute rounded-full cursor-pointer
-        ${isVisible ? (color ? 'bg-slate-900' : 'bg-white shadow-md shadow-zinc-400') : 'bg-transparent'}
-        ${gameSizes.rockSize} 
-        ${gameSizes.rockPosition}`
-      }
-      onClick={() => {
-        // console.log(isVisible)
-        setColor(!color)
-        if (!isVisible) setIsVisible(true)
-      }}
-    >
-      {isVisible && (
-        <span 
-          id={`${coordinates[0]}+${coordinates[1]}`}
-          className={`absolute top-[25%] left-[25%] rounded-full border-[1px]
-            ${gameSizes.circleSize} border-stone-400`}
-        />
-      )}
-    </div>
   );
 }
