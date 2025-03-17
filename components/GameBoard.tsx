@@ -100,7 +100,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     return rows;
   }
 
-  function Rock({ gameSizes, coordinates, argIsVisible }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, color?: 'BLACK' | 'WHITE'}) {
+  function Rock({ gameSizes, coordinates, argIsVisible, color }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, color?: 'BLACK' | 'WHITE'}) {
     const [isVisible, setIsVisible] = useState<boolean>(false)
   
     function handleMove(x: number, y: number) {
