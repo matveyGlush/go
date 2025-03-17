@@ -95,12 +95,12 @@ export default function Game() {
     <Suspense>
       <CustomLayout className="flex justify-center items-center overflow-hidden">
         {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
-        <GameBoard 
+        {gameInfo && <GameBoard 
         crossings={gameInfo?.crossings} 
         playerId={gameInfo?.players[0].is_caller ? gameInfo?.players[0].player_id : gameInfo?.players[1]?.player_id} 
         color={gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color} 
         turn={gameInfo?.current_turn.color}
-        />
+        />}
         <GameHelp />
       </CustomLayout>
       <Modal showModal={showResultModal} showModalFunc={setShowResultModal}>
