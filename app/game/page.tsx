@@ -1,5 +1,7 @@
 'use client'
 
+import {Suspense} from "react";
+
 import { useState, useEffect } from "react";
 import CustomLayout from "@/components/CustomLayout";
 import GameBoard from "@/components/GameBoard";
@@ -63,10 +65,13 @@ export default function Game() {
   }, []);
 
   return (
-    <CustomLayout className="flex justify-center items-center overflow-hidden">
-      {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
-      <GameBoard crossings={gameInfo?.crossings}/>
-      <GameHelp />
-    </CustomLayout>
+    <Suspense>
+      <CustomLayout className="flex justify-center items-center overflow-hidden">
+        {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
+        <GameBoard crossings={gameInfo?.crossings}/>
+        <GameHelp />
+      </CustomLayout>
+    </Suspense>
+    
   );
 }
