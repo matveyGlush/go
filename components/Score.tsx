@@ -15,7 +15,7 @@ export default function Score({ player1, player2, curr, time } : { player1: any,
   return (
     <div className='w-full flex flex-col items-center mt-8'>
       <span>Сейчас ходят {curr?.color === 'BLACK' ? 'черные' : 'белые'}</span>
-      <span className='inline-block mb-2'>Осталось секунд на ход: {time}</span>
+      <span className='inline-block mb-5'>Осталось секунд на ход: {time}</span>
       <div className='w-7/12 flex justify-between mb-2'>
         <span>{player1?.nickname}</span>
         <span>{player1?.color}</span>
