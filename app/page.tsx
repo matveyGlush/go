@@ -217,7 +217,7 @@ export default function Page() {
         <Rules/>
       </Modal>
       <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
-        <GameBoard/>
+        {showGameBoardModal && <GameBoard/>}
       </Modal>
     </Suspense>
   );

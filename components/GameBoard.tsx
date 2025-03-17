@@ -28,8 +28,6 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
   const searchParams = useSearchParams()
   const gameToCheck = searchParams.get('gameToCheck')
 
-
-
   const [cross, setCross] = useState<Crossings | null>()
   const [boardInactive, setBoardInactive] = useState<boolean>(false)
 
@@ -66,6 +64,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
 
   function checkForStone(x: number, y: number): React.JSX.Element {
     console.log('in checkForStone' + (cross === null) + (cross === undefined))
+    console.log(cross)
     cross?.forEach(crossing => {
       if(crossing.x == x && crossing.y == y) {
         console.log('found coordinate' + x + '.' + crossing.x + ';' + y + '.' + crossing.y)
