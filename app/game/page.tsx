@@ -57,23 +57,6 @@ export default function Game() {
       const data = await getGameInfo(token || '', Number(gameId));
       if (isMounted) {
         setGameInfo(data[0].get_game_info || null);
-        const tempColor = gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color;
-        switch (gameInfo?.status) {
-          case 'WHITE WIN': 
-            tempColor === 'WHITE' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
-            setShowResultModal(true);
-            break;
-          case 'BLACK WIN': 
-            tempColor === 'BLACK' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
-            setShowResultModal(true);
-            break;
-          case 'TIE': 
-            setResultMessage('ничья!!!!!!')
-            setShowResultModal(true);
-            break;
-          default:
-            setShowResultModal(false)
-        }
       }
     }
 
@@ -85,6 +68,26 @@ export default function Game() {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    const tempColor = gameInfo?.players[0].is_caller ? gameInfo?.players[0].color : gameInfo?.players[1]?.color;
+    switch (gameInfo?.status) {
+      case 'WHITE WIN': 
+        tempColor === 'WHITE' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
+        setShowResultModal(true);
+        break;
+      case 'BLACK WIN': 
+        tempColor === 'BLACK' ? setResultMessage('ПОБЕДА!') : setResultMessage('поражение.')
+        setShowResultModal(true);
+        break;
+      case 'TIE': 
+        setResultMessage('ничья!!!!!!')
+        setShowResultModal(true);
+        break;
+      default:
+        setShowResultModal(false)
+    }
+  }, [gameInfo])
 
   return (
     <Suspense>

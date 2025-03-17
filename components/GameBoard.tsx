@@ -35,6 +35,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   
       async function fetchData() {
         const data = await getGameInfo(token || '', Number(gameId));
+        console.log(data)
         setCross(data[0].get_game_info.crossings || null);
       }
   
@@ -120,8 +121,8 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
         let elem = document.getElementById(`${coordinates[0]}${coordinates[1]}`);
         if (elem) {
             if (color === 'BLACK') {
-                elem.style.backgroundColor = 'white';
-                elem.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                elem.style.backgroundColor = '#fff';
+                elem.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.1)';
             } else {
                 elem.style.backgroundColor = 'rgb(15, 23, 42)'; // Equivalent to bg-slate-900
             }
