@@ -54,6 +54,8 @@ export default function Game() {
     const token = localStorage.getItem('token')
 
     async function fetchData() {
+      console.log('crossings in game page')
+      console.log(gameInfo?.crossings)
       const data = await getGameInfo(token || '', Number(gameId));
       if (isMounted) {
         setGameInfo(data[0].get_game_info || null);
