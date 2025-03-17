@@ -64,16 +64,16 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
 
   function checkForStone(x: number, y: number): React.JSX.Element {
     console.log('in checkForStone' + (cross === null) + (cross === undefined))
-    // console.log(cross)
-    cross?.forEach(crossing => {
-      if(crossing.x == x && crossing.y == y) {
-        console.log('found coordinate' + x + '.' + crossing.x + ';' + y + '.' + crossing.y)
-        console.log(crossing.player_color)
-        return (
-          <Rock key={crossing.player_color+x+y} gameSizes={gameSizes} coordinates={[x, y]} stoneColor={crossing.player_color} argIsVisible={true}/>
-        )
+    if (cross) {
+      for (let i = 0; i < cross?.length; i++) {
+        if(cross[i].x == x && cross[i].y == y) {
+          console.log('found coordinate' + x + '.' + cross[i].x + ';' + y + '.' + cross[i].y)
+          return (
+            <Rock key={cross[i].player_color+x+y} gameSizes={gameSizes} coordinates={[x, y]} stoneColor={cross[i].player_color} argIsVisible={true}/>
+          )
+        }
       }
-    })
+    }
     console.log('retunr empty')
     return (
       <Rock gameSizes={gameSizes} coordinates={[x, y]}/>
