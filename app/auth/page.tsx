@@ -5,14 +5,14 @@ import CustomLayout from '@/components/CustomLayout';
 import LogIn from '@/components/LogIn';
 import SignUp from '@/components/SignUp';
 import Head from 'next/head';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 export default function Auth() {
 
   const [isAuth, setIsAuth] = useState(true)
 
   return (
-    <>
+    <Suspense>
       <Head>
         <meta property="og:image" content="<generated>" />
         <meta property="og:image:type" content="<generated>" />
@@ -31,6 +31,6 @@ export default function Auth() {
           {isAuth ? "Нет аккаунта? Зарегистрируйтесь!" : "Уже есть аккаунт? Войдите!"}
         </CunstomButton>
       </CustomLayout>
-    </>
+    </Suspense>
   );
 }
