@@ -42,7 +42,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     } else if (crossings) {
       setCross(crossings)
     }
-  })
+  }, [])
 
   const gameSizes = size === 9 ? {
     cellSize: 'cell-size-sm',
@@ -58,6 +58,19 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     circleSize: 'circle-size-lg',
   };
 
+  function checkForStone(x: number, y: number): React.JSX.Element {
+    cross?.forEach(crossing => {
+      if(crossing.x === x && crossing.y === y) {
+        return (
+          <Rock gameSizes={gameSizes} coordinates={[x, y]} color={crossing.player_color} argIsVisible={true}/>
+        )
+      }
+    })
+    return (
+      <Rock gameSizes={gameSizes} coordinates={[x, y]}/>
+    )
+  }
+
   function createGameBoardHtml(): TableEl {
     let rows: TableEl = [];
 
@@ -66,7 +79,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
       for (let j = 0; j < size; j++) {
         cols.push(
           <td key={`${i},${j}`} className={`relative border-[3px] border-gray-600 ${gameSizes.cellSize}`}>
-            <Rock gameSizes={gameSizes} coordinates={[i, j]}/>
+            {checkForStone(i, j)}
           </td>
         );
       }
@@ -76,31 +89,8 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
     return rows;
   }
 
-  useEffect(() => {
-    cross?.forEach(cross => {
-      let elem = document.getElementById(`${cross.x}${cross.y}`);
-      if (elem) {
-          if (cross.player_color !== 'BLACK') {
-              elem.style.backgroundColor = 'white';
-              elem.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
-          } else {
-              elem.style.backgroundColor = 'rgb(15, 23, 42)'; // Equivalent to bg-slate-900
-          }
-      }
-
-      // Apply styles to the circle element
-      let elemCircle = document.getElementById(`${cross.x}${cross.y}`);
-      if (elemCircle) {
-          elemCircle.style.position = 'absolute';
-          elemCircle.style.top = '25%';
-          elemCircle.style.left = '25%';
-          elemCircle.style.borderRadius = '50%';
-          elemCircle.style.border = '1px solid';
-      }
-    })
-  }, [])
-
-  function Rock({ gameSizes, coordinates }: { gameSizes: GameSizes, coordinates: [number, number] }) {
+  function Rock({ gameSizes, coordinates, argIsVisible }: { gameSizes: GameSizes, coordinates: [number, number], argIsVisible?: boolean, color?: 'BLACK' | 'WHITE'}) {
+    const [isVisible, setIsVisible] = useState<boolean>(false)
   
     function handleMove(x: number, y: number) {
       if (turn !== color) {
@@ -113,16 +103,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
       async function fetchData() {
         setBoardInactive(true)
 
-        let elem = document.getElementById(`${coordinates[0]}${coordinates[1]}`);
-        if (elem) {
-            if (color === 'BLACK') {
-                elem.style.backgroundColor = '#fff';
-                elem.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.1)';
-            } else {
-                elem.style.backgroundColor = 'rgb(15, 23, 42)'; // Equivalent to bg-slate-900
-            }
-        }
-        console.log(elem)
+        setIsVisible(true)
 
         const data = await makeMove(token || '', playerId || 0, x, y);
         setBoardInactive(false)
@@ -130,23 +111,30 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   
       fetchData(); // Initial fetch
     }
+
+    useEffect(() => {
+      if (argIsVisible) setIsVisible(true)
+    }, [])
   
     return (
       <div 
-        id={`${coordinates[0]}${coordinates[1]}`}
         className={`absolute rounded-full cursor-pointer
+          ${isVisible ? (color === 'BLACK' ? 'bg-slate-900' : 'bg-white shadow-md shadow-zinc-400') : 'bg-transparent'}
           ${gameSizes.rockSize} 
           ${gameSizes.rockPosition}`
         }
         onClick={() => {
           // console.log(isVisible)
           handleMove(coordinates[0], coordinates[1])
+          if (!isVisible) setIsVisible(true)
         }}
       >
+        {isVisible && (
           <span 
-            id={`${coordinates[0]}+${coordinates[1]}`}
-            className={`${gameSizes.circleSize} border-stone-400`}
+            className={`absolute top-[25%] left-[25%] rounded-full border-[1px]
+              ${gameSizes.circleSize} border-stone-400`}
           />
+        )}
       </div>
     );
   }
