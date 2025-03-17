@@ -23,7 +23,7 @@ type GameSizes = {
   circleSize: string;
 }
 
-export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK", x: 2, y: 5}], playerId, color, turn }: CustomModalProps) {
+export default function GameBoard({ size = 9, crossings = [], playerId, color, turn }: CustomModalProps) {
 
   const searchParams = useSearchParams()
   const gameToCheck = searchParams.get('gameToCheck')
@@ -36,14 +36,14 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
 
   useEffect(() => {
     if (gameToCheck) {
+      
       const token = localStorage.getItem('token')
   
       async function fetchData() {
         const data = await getGameInfo(token || '', Number(gameToCheck));
-        console.log(data)
         setCross(data[0].get_game_info.crossings || null);
       }
-  
+      console.log('fetching in use eff by game to check from url')
       fetchData(); // Initial fetch
     } else if (crossings) {
       setCross(crossings)
