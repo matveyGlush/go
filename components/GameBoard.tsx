@@ -2,6 +2,7 @@
 
 import { getGameInfo, makeMove } from '@/app/_lib/data';
 import { Crossings } from '@/app/game/page';
+import { useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 interface CustomModalProps {
@@ -24,16 +25,21 @@ type GameSizes = {
 
 export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK", x: 2, y: 5}], gameId, playerId, color, turn }: CustomModalProps) {
 
+  const searchParams = useSearchParams()
+  const gameToCheck = searchParams.get('gameToCheck')
+
+
+
   const [cross, setCross] = useState<Crossings | null>()
   const [boardInactive, setBoardInactive] = useState<boolean>(false)
 
 
   useEffect(() => {
-    if (gameId) {
+    if (gameToCheck) {
       const token = localStorage.getItem('token')
   
       async function fetchData() {
-        const data = await getGameInfo(token || '', Number(gameId));
+        const data = await getGameInfo(token || '', Number(gameToCheck));
         console.log(data)
         setCross(data[0].get_game_info.crossings || null);
       }
@@ -59,7 +65,7 @@ export default function GameBoard({ size = 9, crossings = [{player_color: "BLACK
   };
 
   function checkForStone(x: number, y: number): React.JSX.Element {
-    console.log(cross)
+    console.log('in checkForStone' + cross)
     cross?.forEach(crossing => {
       if(crossing.x === x && crossing.y === y) {
         return (

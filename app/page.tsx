@@ -12,11 +12,11 @@ import Modal from '@/components/Modal';
 import Rules from '@/components/Rules';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import { useAuthToken } from './_lib/utils';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { declineInvite, getUserInfo, joinCreatedGame } from './_lib/data';
+import { declineInvite, getUserInfo } from './_lib/data';
 import FormNickname from '@/components/FormNickname';
 
 interface Player {
@@ -52,6 +52,8 @@ export default function Page() {
   const [userInfo, setUserInfo] = useState<UserResponse | null>(null);
 
   const router = useRouter()
+  const pathname = usePathname()
+
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -179,13 +181,12 @@ export default function Page() {
                 <p className="max-w-xs text-sm text-center">{item.board_size}</p>
                 <p className="max-w-xs text-sm text-center">{item.status}</p>
                 <CustomButton 
-                onClickFunc={() => setShowGameBoardModal(!showGameBoardModal)} 
+                onClickFunc={() => {
+                  router.push(pathname + `?gameToCheck=${item.game_id}`)
+                  setShowGameBoardModal(!showGameBoardModal)
+                }} 
                 className="max-w-46 my-2 text-center" theme='dark'
                 >Посмотреть доску</CustomButton>
-
-                <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
-                  <GameBoard gameId={item.game_id}/>
-                </Modal>
               </li>
             )) : <p>Тут будет история ваших игр</p>}
           </ul> :
@@ -214,6 +215,9 @@ export default function Page() {
       </Modal>
       <Modal showModal={showRulesModal} showModalFunc={setShowRulesModal}>
         <Rules/>
+      </Modal>
+      <Modal showModal={showGameBoardModal} showModalFunc={setShowGameBoardModal}>
+        <GameBoard/>
       </Modal>
     </Suspense>
   );
