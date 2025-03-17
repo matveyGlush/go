@@ -69,7 +69,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
         if(cross[i].x == x && cross[i].y == y) {
           console.log('found coordinate' + x + '.' + cross[i].x + ';' + y + '.' + cross[i].y)
           return (
-            <Rock key={cross[i].player_color+x+y} gameSizes={gameSizes} coordinates={[x, y]} stoneColor={cross[i].player_color} argIsVisible={true}/>
+            <Rock gameSizes={gameSizes} coordinates={[x, y]} stoneColor={cross[i].player_color} argIsVisible={true}/>
           )
         }
       }
@@ -124,13 +124,8 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
       fetchData(); // Initial fetch
     }
 
-    if (stoneColor) {
-      console.log('setting is visible!')
-      setIsVisible(true)
-    }
-
     useEffect(() => {
-      if (stoneColor) {
+      if (argIsVisible) {
         console.log('setting is visible!')
         setIsVisible(true)
       }
