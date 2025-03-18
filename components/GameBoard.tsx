@@ -157,7 +157,7 @@ export default function GameBoard({ size = 9, crossings = [], playerId, color, t
   }
 
   return (
-    <table className={`relative game-table border-collapse translate-x-8 my-20 ${gameSizes.moveTable}`}>
+    <table className={`relative game-table border-collapse translate-x-8 mt-10 mb-20 ${gameSizes.moveTable}`}>
       <tbody>
         {cross && createGameBoardHtml()}
       </tbody>

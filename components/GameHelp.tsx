@@ -14,7 +14,7 @@ export default function GameHelp() {
 
   return (
     <>
-      <div className="bg-gray-100 py-16 rounded-lg text-center">
+      <div className="bg-gray-100 py-14 rounded-lg text-center">
         <h3 className="text-2xl font-bold">Поможем чем сможем</h3>
         <CustomButton onClickFunc={() => setShowReportErrorModal(!showReportErrorModal)} className="w-52 mx-auto mt-3 block" theme='dark'>Сообщить об ошибке</CustomButton>
         <CustomButton onClickFunc={() => setRulesModal(!showRulesModal)} className="w-52 mx-auto mt-3" theme='dark'>Правила игры</CustomButton>
