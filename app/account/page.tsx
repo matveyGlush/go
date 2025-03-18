@@ -36,6 +36,7 @@ export default function Account() {
           return
         }
         setUser(userData[0].get_user_stats)
+        console.log(user)
       }
   
       fetchData(); // Initial fetch
@@ -44,8 +45,10 @@ export default function Account() {
   return(
     <Suspense>
       <CustomLayout>
-        <h2 className="mb-4 text-2xl font-bold text-center">ПРОЦЕНТ ПОБЕД</h2>
-        {user && <h3 className="mb-7 text-9xl font-bold text-center">{Math.round((user.wins / user.total_games) * 100) || 0}</h3>}
+        {user && <>
+          <h2 className="mb-4 text-2xl font-bold text-center">ПРОЦЕНТ ПОБЕД</h2>
+          <h3 className="mb-7 text-9xl font-bold text-center">{Math.round((user.wins / user.total_games) * 100) || 0}</h3>
+        </>}
         <div className="flex justify-between md:flex-row flex-col md:gap-5 md:mx-auto md:justify-center">
           <CunstomButton className="px-4 py-2 text-xs mb-6 md:h-16" onClickFunc={() => handleLogout()}>Выйти</CunstomButton>
           <CunstomButton className="px-4 py-2 text-xs mb-2 md:h-16">Сброс пароля</CunstomButton>

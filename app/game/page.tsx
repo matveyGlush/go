@@ -96,7 +96,7 @@ export default function Game() {
   return (
     <Suspense>
       <CustomLayout className="flex justify-center items-center overflow-hidden">
-        <CustomButton className="py-2 px-4 mx-auto" onClickFunc={() => 
+        <CustomButton className="flex py-2 px-4 mx-auto" onClickFunc={() => 
           makeMove(
             token || '', 
             gameInfo?.players[0].is_caller ? gameInfo?.players[0].player_id : gameInfo?.players[1]?.player_id || 0,
