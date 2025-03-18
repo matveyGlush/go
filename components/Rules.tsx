@@ -7,9 +7,18 @@ export default function Rules() {
   return (
     <article className="prose text-gray-900">
       <h1 className="max-w-[90%] text-2xl md:text-3xl font-bold mb-5">
-        Правила настольной игры &laquo;Го&raquo; (Go)
+        Правила настольной игры &laquo;Го-бан (пять в ряд)&raquo; (Go)
       </h1>
       <section className='mb-4'>
+        <p className="mb-2 pt-1 pl-2 text-gray-900">
+          Первым выстроить вертикальную, горизонтальную или&nbsp;диагональную прямую
+          линию из&nbsp;5&nbsp;камней.
+        </p>
+      </section>
+      <section className='mb-4'>
+        <h2 className="text-xl font-semibold text-gray-900">
+          Правила настольной игры &laquo;Го
+        </h2>
         <h2 className="text-xl font-semibold text-gray-900">
           Компоненты
         </h2>

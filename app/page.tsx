@@ -103,7 +103,7 @@ export default function Page() {
         <div className="py-8 text-center bg-gray-100 rounded-lg mb-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 px-6">
             <div className="mb-3 px-3">
-              <h1 className="text-2xl font-bold mb-4 md:text-4xl">Игра&nbsp;Го&nbsp;&mdash;&nbsp;Искусство стратегии&nbsp;и&nbsp;гармонии</h1>
+              <h1 className="text-2xl font-bold mb-4 md:text-4xl">Игра&nbsp;Го-Бан (пять в ряд)&nbsp;&mdash;&nbsp;Искусство стратегии&nbsp;и&nbsp;гармонии</h1>
               <p className="text-lg max-w-md mx-auto">Постигайте древнюю игру&nbsp;Го: развивайте мышление, захватывая территории на&nbsp;игровом поле.</p>
             </div>
             <div className="flex justify-center align-middle rounded-lg overflow-hidden">
