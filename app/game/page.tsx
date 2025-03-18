@@ -5,12 +5,13 @@ import {Suspense} from "react";
 import { useState, useEffect } from "react";
 import CustomLayout from "@/components/CustomLayout";
 import GameBoard from "@/components/GameBoard";
-import { getGameInfo } from "../_lib/data";
+import { getGameInfo, makeMove } from "../_lib/data";
 import GameHelp from "@/components/GameHelp";
 import Score from "@/components/Score";
 import { useSearchParams } from "next/navigation";
 import Modal from "@/components/Modal";
 import GameResult from "@/components/GameResult";
+import CustomButton from "@/components/CustomButton";
 
 export type Crossings = {
   player_color: 'WHITE' | 'BLACK',
@@ -49,9 +50,10 @@ export default function Game() {
   const searchParams = useSearchParams()
   const gameId = searchParams.get('id')
 
+  const token = localStorage.getItem('token')
+
   useEffect(() => {
     let isMounted = true;
-    const token = localStorage.getItem('token')
 
     async function fetchData() {
       console.log('crossings in game page')
@@ -94,6 +96,15 @@ export default function Game() {
   return (
     <Suspense>
       <CustomLayout className="flex justify-center items-center overflow-hidden">
+        <CustomButton onClickFunc={() => 
+          makeMove(
+            token || '', 
+            gameInfo?.players[0].is_caller ? gameInfo?.players[0].player_id : gameInfo?.players[1]?.player_id || 0,
+            -1,
+            -1
+          )}>
+          Пропустить ход
+        </CustomButton>
         {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
         {gameInfo && <GameBoard 
         crossings={gameInfo?.crossings} 

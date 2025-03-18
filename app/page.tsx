@@ -130,21 +130,13 @@ export default function Page() {
             Создать новую
           </CustomButton>
           }
-          {/* {isAuth === 'in' && 
-          <CustomButton 
-            className="max-w-48 mt-3 mb-6 px-7 py-3" theme='dark'
-            onClickFunc={() => isAuth === 'in' ? setShowSingleGameModal(!showSingleGameModal) : router.push('/auth')}
-          >
-            Одиночная игра
-          </CustomButton>
-          } */}
         </div>        
         <div className="mb-12 text-center">
           <h2 className="text-2xl font-bold mb-6">Список приглашений</h2>
           {isAuth === 'fetching' && <LoadingSpinner/>}
           {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
-            {userInfo?.invites ? userInfo?.invites.map((item) => (
+            {(userInfo?.invites.length || 0) > 0 ? userInfo?.invites.map((item) => (
               <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
                 <h3 className="text-xl font-semibold mb-2">{item.sender_email}</h3>
                 <div>
@@ -174,7 +166,7 @@ export default function Page() {
           {isAuth === 'fetching' && <LoadingSpinner/>}
           {isAuth === 'in' ? 
           <ul className="grid grid-cols-1 gap-4 w-full">
-            {userInfo?.games ? userInfo?.games.map((item) => (
+            {(userInfo?.games.length || 0) > 0 ? userInfo?.games.map((item) => (
               <li key={item.game_id} className="p-3 text-center flex md:flex-row flex-col items-center justify-evenly bg-white shadow-md rounded-lg max-w-sm md:max-w-xl w-full mx-auto">
                 <h3 className="text-sm font-semibold mb-2">VS {item.players[0]?.email !== userInfo.email ? item.players[0]?.email : item.players[1]?.email}</h3>
                 <p className="max-w-xs text-sm text-center">{item.board_size}</p>
