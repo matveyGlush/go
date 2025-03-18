@@ -6,6 +6,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import Select from './SelectGameBoardSize';
 import { useRouter } from 'next/navigation';
 import { findGamesWithoutInvite, joinCreatedGame } from '@/app/_lib/data';
+import LoadingSpinner from './LoadingSpinner';
 
 type Inputs = {
   boardSize: number
@@ -16,6 +17,7 @@ export default function FormFindGame() {
 
   const router = useRouter();
   const findGameForm = useForm<Inputs>();
+  const [isLoading, setIsLoadind] = useState(false)
 
   const onFindGameSubmit: SubmitHandler<Inputs> = (data) => {
     const token = localStorage.getItem('token')
@@ -61,8 +63,9 @@ export default function FormFindGame() {
           <CunstomButton
             type="submit"
             className="mt-5 w-full py-2 bg-black text-white rounded-lg hover:bg-gray-800"
+            onClickFunc={() => setIsLoadind(true)}
           >
-            Случайный соперник
+            {isLoading ? <LoadingSpinner/> : 'Случайный соперник'}
           </CunstomButton>
         </form>
       </div>
