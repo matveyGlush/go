@@ -144,10 +144,10 @@ export default function Page() {
                   onClickFunc={() => setShowNicknameModal(true)} 
                   className="max-w-40 my-2 text-center mr-3" theme='dark'
                   >Принять</CustomButton>
-                  <CustomButton 
+                  {/* <CustomButton 
                   onClickFunc={() => handleDecline(item.recipient_email, item.sender_email)} 
                   className="max-w-40 my-2 text-center bg-red-800 text-white px-5 py-1"
-                  >Отклонить</CustomButton>
+                  >Отклонить</CustomButton> */}
                 </div>
 
                 <Modal showModal={showNicknameModal} showModalFunc={setShowNicknameModal}>
