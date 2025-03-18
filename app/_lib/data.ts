@@ -288,3 +288,16 @@ export async function declineInvite(from: string, to: string) {
     return null;
   }
 }
+
+export async function resetPassword(token: string, newPassword: string) {
+  try {
+    const sql = await connectToDB();
+    const result = await sql`SELECT * FROM set_new_password(${token}, ${newPassword})`;
+    return result;
+  } catch (err) {
+    console.error("DB Fetch Error:", err);
+    sql = null;
+    return null;
+  }
+}
+

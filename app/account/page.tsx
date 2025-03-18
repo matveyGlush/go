@@ -4,6 +4,8 @@ import CustomLayout from "@/components/CustomLayout";
 import { getUserStats, logout } from "../_lib/data";
 import { useRouter } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
+import Modal from "@/components/Modal";
+import FormResetPassword from "@/components/FormResetPassword";
 
 export default function Account() {
 
@@ -23,6 +25,7 @@ export default function Account() {
     wins: number
   }
 
+  const [showResetModal, setShowResetModal] = useState(false)
   const [user, setUser] = useState<UserStats | null>(null)
 
   useEffect(() => {
@@ -51,10 +54,12 @@ export default function Account() {
         </>}
         <div className="flex justify-between md:flex-row flex-col md:gap-5 md:mx-auto md:justify-center">
           <CunstomButton className="px-4 py-2 text-xs mb-6 md:h-16" onClickFunc={() => handleLogout()}>Выйти</CunstomButton>
-          <CunstomButton className="px-4 py-2 text-xs mb-2 md:h-16">Сброс пароля</CunstomButton>
-          <CunstomButton className="px-4 py-2 bg-red-800 text-white mb-4 text-xs md:h-16">Удалить аккаунт</CunstomButton>
+          <CunstomButton className="px-4 py-2 text-xs mb-2 md:h-16" onClickFunc={() => setShowResetModal(true)}>Сброс пароля</CunstomButton>
         </div>
       </CustomLayout>
+      <Modal showModal={showResetModal} showModalFunc={setShowResetModal}>
+        <FormResetPassword/>
+      </Modal>
     </Suspense>
   )
 }
