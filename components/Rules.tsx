@@ -7,7 +7,7 @@ export default function Rules() {
   return (
     <article className="prose text-gray-900">
       <h1 className="max-w-[90%] text-2xl md:text-3xl font-bold mb-5">
-        Правила настольной игры &laquo;Го-бан (пять в ряд)&raquo; (Go)
+        Правила настольной игры &laquo;Го-бан (пять в&nbsp;ряд)&raquo; (Go)
       </h1>
       <section className='mb-4'>
         <p className="mb-2 pt-1 pl-2 text-gray-900">
