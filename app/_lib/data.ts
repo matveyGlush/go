@@ -280,7 +280,7 @@ export async function getUserStats(token: string) {
 export async function declineInvite(from: string, to: string) {
   try {
     const sql = await connectToDB();
-    const result = await sql`DELETE FROM Invites WHERE email='${from}' AND email_recipient='${to}'`;
+    const result = await sql`DELETE FROM Invites WHERE Invites.email='${from}' AND Invites.email_recipient='${to}'`;
     return result;
   } catch (err) {
     console.error("DB Fetch Error:", err);

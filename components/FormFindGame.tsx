@@ -22,14 +22,14 @@ export default function FormFindGame() {
   
     async function fetchData() {
       const allGames = await findGamesWithoutInvite(token || '');
-      allGames[0].find_games_without_invite.available_games.forEach(async (el: { board_size: number; game_id: any; }) => {
-        console.log(el.board_size == data.boardSize)
-        if (el.board_size == data.boardSize) {
-          await joinCreatedGame(token || '', el.game_id, data.nickname);
-          router.push(`/game?id=${el.game_id}`)
+      for (let i = 0; i < allGames[0].find_games_without_invite.available_games.length; i++) {
+        console.log(allGames[0].find_games_without_invite.available_games[i].board_size == data.boardSize)
+        if (allGames[0].find_games_without_invite.available_games[i].board_size == data.boardSize) {
+          await joinCreatedGame(token || '', allGames[0].find_games_without_invite.available_games[i].game_id, data.nickname);
+          router.push(`/game?id=${allGames[0].find_games_without_invite.available_games[i].game_id}`)
           return
         } else alert("Нет подходящих игр! Поменяйте размер поля или попробуйте позже.")
-      })
+      }
     }
 
     fetchData();
