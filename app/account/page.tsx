@@ -30,13 +30,13 @@ export default function Account() {
       
       async function fetchData() {
         const userData = await getUserStats(token || '');
+        console.log(userData)
         // const gameId = JSON.stringify(response);
         if (userData[0].get_user_stats.error) {
           alert(`Ошибка. ${userData[0].get_user_info.error}`)
           return
         }
         setUser(userData[0].get_user_stats)
-        console.log(userData[0].get_user_stats)
       }
   
       fetchData(); // Initial fetch
