@@ -96,7 +96,7 @@ export default function Game() {
   return (
     <Suspense>
       <CustomLayout className="flex justify-center items-center overflow-hidden">
-        <CustomButton className="flex py-2 px-4 mx-auto" onClickFunc={() => 
+        {/* <CustomButton className="flex py-2 px-4 mx-auto" onClickFunc={() => 
           makeMove(
             token || '', 
             gameInfo?.players[0].is_caller ? gameInfo?.players[0].player_id : gameInfo?.players[1]?.player_id || 0,
@@ -104,7 +104,7 @@ export default function Game() {
             -1
           )}>
           Пропустить ход
-        </CustomButton>
+        </CustomButton> */}
         {gameInfo && <Score player1={gameInfo.players[0]} player2={gameInfo.players[1]} curr={gameInfo?.current_turn} time={gameInfo.time_left}/>}
         {gameInfo && <GameBoard 
         crossings={gameInfo?.crossings} 
