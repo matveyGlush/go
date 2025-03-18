@@ -36,7 +36,7 @@ export default function Account() {
           return
         }
         setUser(userData[0].get_user_stats)
-        console.log(user)
+        console.log(userData[0].get_user_stats)
       }
   
       fetchData(); // Initial fetch
