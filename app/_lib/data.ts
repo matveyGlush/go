@@ -7,8 +7,8 @@ const sshConfig = {
   debug: console.log,
   host: "helios.cs.ifmo.ru",
   port: 2222,
-  username: "s338844",
-  password: "BhFk}9219",
+  username: process.env.USER_NAME,
+  password: process.env.USER_PASSWORD,
   tryKeyboard: true,
   readyTimeout: 99999,
 };
@@ -17,8 +17,8 @@ const dbConfig = {
   host: "127.0.0.1",
   port: 5434,
   database: "studs",
-  username: "s338844",
-  password: "Qb4Ixf1x34N1c5zo",
+  username: process.env.USER_NAME,
+  password: process.env.DB_PASSWORD,
   ssl: false,
 };
 
